@@ -83,7 +83,7 @@ provider "aws" {
 }
 
 module "vault_ha" {
-  source = "https://github.com/binlab/terraform-aws-vault-ha-raft.git?ref=v0.1.0"
+  source = "github.com/binlab/terraform-aws-vault-ha-raft?ref=v0.1.0"
 
   cluster_name        = "vault-ha"
   node_instance_type  = "t3a.small"
