@@ -145,11 +145,13 @@ $
 
 ## Limitations
 
-Because **AWS** strictly limiting the size of **User Data** file, we can't put into the ignition file a very big certificate and keys. 
+- Because **AWS** strictly limiting the size of **User Data** file, we can't put into the ignition file a very big certificate and keys. 
 
-> User data is limited to 16 KB, in raw form, before it is base64-encoded. The size of a string of length n after base64-encoding is ceil(n/3)*4. [source](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instancedata-add-user-data.html)
+  > User data is limited to 16 KB, in raw form, before it is base64-encoded. The size of a string of length n after base64-encoding is ceil(n/3)*4. [source](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instancedata-add-user-data.html)
 
-So in this case we need to select the size experimentally. For exactly knows size of the file, you can use debug mode
+  So in this case we need to select the size experimentally. For exactly knows size of the file, you can use debug mode
+
+- Requirements block and [versions.tf](versions.tf) may not accurately display a real minimum version of providers. A declared versions ware just an installed in the time of development and testing of the module and can give guaranties of working with this or higher version. If you use older versions of modules for some reason and can give some guarantees of working with it, please create an issue for downscaling some version to minimal needed.
 
 
 ## Requirements
@@ -157,19 +159,19 @@ So in this case we need to select the size experimentally. For exactly knows siz
 | Name | Version |
 |------|---------|
 | terraform | >= 0.12 |
-| aws | ~> 2.53.0 |
-| ignition | ~> 1.2.1 |
-| local | ~> 1.4.0 |
-| tls | ~> 2.1.1 |
+| aws | >= 2.53.0 |
+| ignition | >= 1.2.1 |
+| local | >= 1.4.0 |
+| tls | >= 2.1.1 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| aws | ~> 2.53.0 |
-| ignition | ~> 1.2.1 |
-| local | ~> 1.4.0 |
-| tls | ~> 2.1.1 |
+| aws | >= 2.53.0 |
+| ignition | >= 1.2.1 |
+| local | >= 1.4.0 |
+| tls | >= 2.1.1 |
 
 ## Inputs
 
