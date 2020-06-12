@@ -15,7 +15,6 @@ locals {
     Environment = "stage"
     Service     = "Vault-HA"
     Name        = format("%s%s", var.cluster_prefix, var.cluster_name)
-    Version     = var.docker_tag
   }, var.tags)
 
   cluster_url = format("%s://%s:%d",
