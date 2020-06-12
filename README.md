@@ -201,7 +201,7 @@ $
 | debug\_path | Path to folder where will be stored debug files.<br>If is empty then default "${path.module}/.debug"<br>you can set custom full path e.g. "/home/user/.debug" | `string` | `""` | no |
 | disable\_mlock | Disables the server from executing the "mlock" syscall. Mlock <br>prevents memory from being swapped to disk. Disabling "mlock" is <br>not recommended in production, but is fine for local development <br>and testing | `bool` | `false` | no |
 | docker\_repo | Vault Docker repository URI | `string` | `"docker://vault"` | no |
-| docker\_tag | Vault Docker image version tag | `string` | `"1.4.0"` | no |
+| docker\_tag | Vault Docker image version tag | `string` | `"1.4.2"` | no |
 | internal\_zone | Name for internal domain zone. Need for assigning domain names <br>to each of nodes for cluster server-to-server communication.<br>Also used for SSH connection over Bastion host. | `string` | `"vault.int"` | no |
 | node\_allow\_public | Assign public network to nodes (EC2 Instances). EC2 will be <br>available publicly with HTTPS "node\_port" ports and SSH "ssh\_port". <br>For debugging only, don't use on production! | `bool` | `false` | no |
 | node\_allowed\_subnets | If variable "node\_allow\_public" is set to "true" - list of these <br>IPs will be allowed to connect to Vault node directly (to instances) | `list(string)` | <pre>[<br>  "0.0.0.0/0"<br>]</pre> | no |
