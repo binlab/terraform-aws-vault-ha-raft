@@ -28,7 +28,8 @@ resource aws_instance "node" {
   ])
 
   tags = merge(local.tags, {
-    Name = format(local.name_tmpl, format("node%d", count.index))
+    Name    = format(local.name_tmpl, format("node%d", count.index))
+    Version = var.docker_tag
   })
 
   volume_tags = merge(local.tags, {
