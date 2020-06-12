@@ -1,5 +1,19 @@
 # Hashicorp Vault HA cluster based on Raft Consensus Algorithm
 
+<p align="center">
+  <a href="https://github.com/binlab/terraform-aws-vault-ha-raft/blob/LICENSE"><img alt="License" src="https://img.shields.io/github/license/binlab/terraform-aws-vault-ha-raft?logo=github"></a>
+  <a href="https://github.com/binlab/terraform-aws-vault-ha-raft/tags"><img alt="GitHub tag" src="https://img.shields.io/github/v/tag/binlab/terraform-aws-vault-ha-raft?logo=github"></a>
+  <a href="https://github.com/binlab/terraform-aws-vault-ha-raft/releases"><img alt="GitHub release" src="https://img.shields.io/github/v/release/binlab/terraform-aws-vault-ha-raft?logo=github"></a>
+  <a href="https://github.com/binlab/terraform-aws-vault-ha-raft/commits"><img alt="Last Commit" src="https://img.shields.io/github/last-commit/binlab/terraform-aws-vault-ha-raft?logo=github"></a>
+  <a href="https://github.com/binlab/terraform-aws-vault-ha-raft/commits"><img alt="GitHub commit activity" src="https://img.shields.io/github/commit-activity/m/binlab/terraform-aws-vault-ha-raft?logo=github"></a>
+</p>
+<p align="center">
+  <img alt="languages Count" src="https://img.shields.io/github/languages/count/binlab/terraform-aws-vault-ha-raft">
+  <img alt="Languages Top" src="https://img.shields.io/github/languages/top/binlab/terraform-aws-vault-ha-raft">
+  <img alt="Code Size" src="https://img.shields.io/github/languages/code-size/binlab/terraform-aws-vault-ha-raft">
+  <img alt="Repo Size" src="https://img.shields.io/github/repo-size/binlab/terraform-aws-vault-ha-raft">
+</p>
+
 <img width="600" alt="Vault Logo" src="https://raw.githubusercontent.com/hashicorp/vault/f22d202cde2018f9455dec755118a9b84586e082/Vault_PrimaryLogo_Black.png">
 
 Vault HA cluster is based on [Raft Storage Backend](https://www.vaultproject.io/docs/configuration/storage/raft) announced **tech preview** on [1.2.0 (July 30th, 2019)](https://github.com/hashicorp/vault/blob/master/CHANGELOG.md#120-july-30th-2019), introduced a **beta** on [1.3.0 (November 14th, 2019))](https://github.com/hashicorp/vault/blob/master/CHANGELOG.md#13-november-14th-2019) and promoted **out of beta** on [1.4.0 (April 7th, 2020)](https://github.com/hashicorp/vault/blob/master/CHANGELOG.md#140-april-7th-2020)
