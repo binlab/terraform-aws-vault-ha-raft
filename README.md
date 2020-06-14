@@ -248,6 +248,7 @@ $
 | Name | Description |
 |------|-------------|
 | alb\_dns\_name | ALB external endpoint DNS name. Should use to assign <br>"CNAME" record of public domain |
+| alb\_zone\_id | ALB canonical hosted Zone ID of the load balancer.<br>Should use to assign Route 53 "Alias" record (AWS only). |
 | cluster\_url | Cluster public URL with schema, domain, and port.<br>All parameters depend on inputs values and calculated automatically <br>for convenient use. Can be created separately outside a module |
 | nat\_public\_ips | NAT public IPs assigned as an external IP for requests from <br>each of the nodes. Convenient to use for restrict application, <br>audit logs, some security groups, or other IP-based security <br>policies. Note: if set "node\_allow\_public" each node will get <br>its own public IP which will be used for external requests |
 | private\_subnets | List of Private Subnet IDs created in a module and associated with it. <br>Under the hood is using "NAT Gateway" to external connections for the <br>"Route 0.0.0.0/0". When variable "node\_allow\_public" = false, this <br>network assigned to the instancies. For other cases, this useful to <br>assign another resource in this VPS for example Database which can <br>work behind a NAT (or without NAT at all and external connections <br>for security reasons) and not needs to be exposed publicly by own IP. |
