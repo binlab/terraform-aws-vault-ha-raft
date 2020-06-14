@@ -62,6 +62,14 @@ output "alb_dns_name" {
   value       = aws_lb.cluster.dns_name
 }
 
+output "alb_zone_id" {
+  description = <<-EOT
+    ALB canonical hosted Zone ID of the load balancer.
+    Should use to assign Route 53 "Alias" record (AWS only).
+  EOT
+  value       = aws_lb.cluster.zone_id
+}
+
 output "cluster_url" {
   description = <<-EOT
     Cluster public URL with schema, domain, and port.
