@@ -129,7 +129,7 @@ $
 ## TODO
 
 - [ ] Add examples of use with different cases [#10](https://github.com/binlab/terraform-aws-vault-ha-raft/issues/10)
-- [ ] Hosted module on [Terraform Registry](https://registry.terraform.io)
+- [ ] Hosted module on [Terraform Registry](https://registry.terraform.io) [#13](https://github.com/binlab/terraform-aws-vault-ha-raft/issues/13)
 - [ ] Add validation of input data in [variables.tf](variables.tf) 
 - [ ] Add support **Fedora CoreOS** as [announced](https://coreos.com/os/docs/latest/cloud-config-deprecated.html) **CoreOS Container Linux** will reach its end of life on **May 26, 2020** and will no longer receive updates.
 - [ ] Remove external dependency - *VPC Module* - [#7](https://github.com/binlab/terraform-aws-vault-ha-raft/issues/7)
