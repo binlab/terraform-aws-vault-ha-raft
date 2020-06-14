@@ -45,7 +45,7 @@ resource aws_instance "node" {
       ami,
       # Added due: 
       # https://github.com/terraform-providers/terraform-provider-aws/issues/729
-      volume_tags, 
+      volume_tags,
     ]
   }
 

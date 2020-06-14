@@ -117,7 +117,7 @@ variable "ssh_allowed_subnets" {
     instances)
   EOT
   type        = list(string)
-  default     = ["0.0.0.0/0"]
+  default     = ["0.0.0.0/32"]
 }
 
 variable "peer_port" {
