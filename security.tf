@@ -68,6 +68,15 @@ resource "aws_security_group" "node" {
     security_groups = [aws_security_group.vpc.id]
   }
 
+  ingress {
+    description     = "Allow SSH Connection from self VPC Security Group"
+    from_port       = var.ssh_port
+    to_port         = var.ssh_port
+    protocol        = "tcp"
+    cidr_blocks     = []
+    security_groups = [aws_security_group.vpc.id]
+  }
+
   egress {
     description = "Allow All Outbound Traffic"
     from_port   = 0
