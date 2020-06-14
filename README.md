@@ -167,6 +167,8 @@ $
 
 - Requirements block and [versions.tf](versions.tf) may not accurately display a real minimum version of providers. A declared versions ware just an installed in the time of development and testing of the module and can give guaranties of working with this or higher version. If you use older versions of modules for some reason and can give some guarantees of working with it, please create an issue for downscaling some version to minimal needed.
 
+- According to the [opened issue](https://github.com/terraform-providers/terraform-provider-aws/issues/729) be careful with Tags settings, any changes after creating the tags may have a trigger effect on the change of value. Until the problem is closed by the Terraform team, a [temporary workaround](https://github.com/binlab/terraform-aws-vault-ha-raft/blob/b12700faef08ec460fc341d5ad12d0ee575486f6/ec2.tf#L46) is applied and it is best to determine the tag names in advance
+
 
 ## Requirements
 
@@ -218,7 +220,7 @@ $
 | docker\_tag | Vault Docker image version tag | `string` | `"1.4.2"` | no |
 | internal\_zone | Name for internal domain zone. Need for assigning domain names <br>to each of nodes for cluster server-to-server communication.<br>Also used for SSH connection over Bastion host. | `string` | `"vault.int"` | no |
 | node\_allow\_public | Assign public network to nodes (EC2 Instances). EC2 will be <br>available publicly with HTTPS "node\_port" ports and SSH "ssh\_port". <br>For debugging only, don't use on production! | `bool` | `false` | no |
-| node\_allowed\_subnets | If variable "node\_allow\_public" is set to "true" - list of these <br>IPs will be allowed to connect to Vault node directly (to instances) | `list(string)` | <pre>[<br>  "0.0.0.0/0"<br>]</pre> | no |
+| node\_allowed\_subnets | If variable "node\_allow\_public" is set to "true" - list of these <br>IPs will be allowed to connect to Vault node directly (to instances) | `list(string)` | <pre>[<br>  "0.0.0.0/32"<br>]</pre> | no |
 | node\_cert\_hours\_valid | The number of hours after initial issuing that the certificate <br>will become invalid for Vault node. The certificate used for <br>internal communication in a cluster by peers and to connect from <br>ALB. Not recommended set a small value as there is no reissuance <br>mechanism without applying of the Terraform | `number` | `43800` | no |
 | node\_cpu\_credits | The credit option for CPU usage [unlimited/standard] | `string` | `"standard"` | no |
 | node\_instance\_type | Type of instance e.g. [t3.small] | `string` | `"t3.small"` | no |
@@ -231,7 +233,7 @@ $
 | seal\_awskms | Map for an assignment for Vault to use AWS KMS as the seal <br>wrapping mechanism. If set will disable "seal\_transit". <br>More: https://www.vaultproject.io/docs/configuration/seal/awskms | `map` | `{}` | no |
 | seal\_transit | Map for assignment Transit seal configuration for use Vault's <br>Transit Secret Engine as the autoseal mechanism. <br>More: https://www.vaultproject.io/docs/configuration/seal/transit | `map` | `{}` | no |
 | ssh\_admin\_principals | List of SSH authorized principals for user "Core" when SSH login <br>configured via Certificate Authority ("ca\_ssh\_public\_key" is set)<br>https://man.openbsd.org/sshd_config#AuthorizedPrincipalsFile | `list(string)` | <pre>[<br>  "vault-ha"<br>]</pre> | no |
-| ssh\_allowed\_subnets | If variable "node\_allow\_public" is set to "true" - list of these <br>IPs will be allowed to connect to Vault node by SSH directly (to <br>instances) | `list(string)` | <pre>[<br>  "0.0.0.0/0"<br>]</pre> | no |
+| ssh\_allowed\_subnets | If variable "node\_allow\_public" is set to "true" - list of these <br>IPs will be allowed to connect to Vault node by SSH directly (to <br>instances) | `list(string)` | <pre>[<br>  "0.0.0.0/32"<br>]</pre> | no |
 | ssh\_authorized\_keys | List of SSH authorized keys assigned to "Core" user (sudo user) | `list(string)` | `[]` | no |
 | ssh\_core\_principals | List of SSH authorized principals for user "Admin" when SSH login <br>configured via Certificate Authority ("ca\_ssh\_public\_key" is set) <br>More: https://man.openbsd.org/sshd_config#AuthorizedPrincipalsFile | `list(string)` | <pre>[<br>  "sudo"<br>]</pre> | no |
 | ssh\_port | Listening SSH port on instancies in public and private networks. <br>Changes used only when "ca\_ssh\_public\_key" set otherwise it equal <br>to 22 as default | `number` | `22` | no |

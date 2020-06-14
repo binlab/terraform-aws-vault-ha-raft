@@ -1,4 +1,4 @@
-data "aws_iam_policy_document" "assume_role" {
+data aws_iam_policy_document "autounseal_sts" {
   count = var.autounseal ? 1 : 0
 
   statement {
@@ -12,14 +12,13 @@ data "aws_iam_policy_document" "assume_role" {
   }
 }
 
-data "aws_iam_policy_document" "autounseal" {
+data aws_iam_policy_document "autounseal" {
   count = var.autounseal ? 1 : 0
 
   statement {
     sid       = "VaultKMSUnseal"
     effect    = "Allow"
     resources = [aws_kms_key.autounseal[0].arn]
-
     actions = [
       "kms:Encrypt",
       "kms:Decrypt",
@@ -28,14 +27,14 @@ data "aws_iam_policy_document" "autounseal" {
   }
 }
 
-resource "aws_iam_role" "autounseal" {
+resource aws_iam_role "autounseal" {
   count = var.autounseal ? 1 : 0
 
   name               = format(local.name_tmpl, "autounseal")
-  assume_role_policy = data.aws_iam_policy_document.assume_role[0].json
+  assume_role_policy = data.aws_iam_policy_document.autounseal_sts[0].json
 }
 
-resource "aws_iam_role_policy" "autounseal" {
+resource aws_iam_role_policy "autounseal" {
   count = var.autounseal ? 1 : 0
 
   name   = format(local.name_tmpl, "autounseal")
@@ -43,7 +42,7 @@ resource "aws_iam_role_policy" "autounseal" {
   policy = data.aws_iam_policy_document.autounseal[0].json
 }
 
-resource "aws_iam_instance_profile" "autounseal" {
+resource aws_iam_instance_profile "autounseal" {
   count = var.autounseal ? 1 : 0
 
   name = format(local.name_tmpl, "autounseal")

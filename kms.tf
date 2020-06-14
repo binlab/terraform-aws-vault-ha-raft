@@ -1,4 +1,4 @@
-resource "aws_kms_key" "autounseal" {
+resource aws_kms_key "autounseal" {
   count = var.autounseal ? 1 : 0
 
   description             = "Vault Auto-Unseal KMS Key"

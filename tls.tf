@@ -2,7 +2,7 @@
 #                           SSH Authorized Key                            #
 ###########################################################################
 
-resource "tls_private_key" "core" {
+resource tls_private_key "core" {
   count = local.ssh_authorized_keys ? 0 : 1
 
   algorithm = "RSA"
@@ -14,8 +14,8 @@ resource "tls_private_key" "core" {
 ###########################################################################
 
 resource tls_private_key "ca" {
-  algorithm   = "RSA"
-  rsa_bits    = 2048
+  algorithm = "RSA"
+  rsa_bits  = 2048
 
   lifecycle {
     prevent_destroy = false

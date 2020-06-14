@@ -17,7 +17,7 @@ resource aws_route53_zone "int" {
   })
 }
 
-resource "aws_route53_record" "int" {
+resource aws_route53_record "int" {
   count = var.cluster_count
 
   zone_id = aws_route53_zone.int.zone_id
