@@ -126,9 +126,22 @@ $
 
 *Then just open URL in a browser and initialize the cluster*
 
+**ATTENTION! Some resources cannot be covered by Amazon Free Tier or not Free usage and cost a money so after running this example should destroy all resources created previously by next command:**
+
+```shell
+$ terraform destroy
+```
+
+## Examples
+
+  1. [Assigning CNAME and Route 53 Alias to Vault HA cluster](examples/route53-dns-records/)
+  1. [Assigning module's VPC to external resources e.g. Bastion host](examples/vpc-assign-bastion/)
+  1. [VPC Peering different networks e.g. RDS Database](examples/vpc-peering-rds/)
+
+
 ## TODO
 
-- [ ] Add examples of use with different cases [#10](https://github.com/binlab/terraform-aws-vault-ha-raft/issues/10)
+- [x] Add examples of use with different cases [#10](https://github.com/binlab/terraform-aws-vault-ha-raft/issues/10)
 - [ ] Hosted module on [Terraform Registry](https://registry.terraform.io) [#13](https://github.com/binlab/terraform-aws-vault-ha-raft/issues/13)
 - [ ] Add validation of input data in [variables.tf](variables.tf) 
 - [ ] Add support **Fedora CoreOS** as [announced](https://coreos.com/os/docs/latest/cloud-config-deprecated.html) **CoreOS Container Linux** will reach its end of life on **May 26, 2020** and will no longer receive updates.
