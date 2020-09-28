@@ -36,7 +36,7 @@ variable "cluster_count" {
 
 variable "cluster_domain" {
   description = <<-EOT
-    Public cluster domain that will be assigned as CNAME record to 
+    Public cluster domain that will be assigned as CNAME record to
     ALB endpoint. If not set ALB endpoint will be used
   EOT
   type        = string
@@ -45,15 +45,45 @@ variable "cluster_domain" {
 
 variable "vpc_cidr" {
   description = <<-EOT
-    VPC CIDR associated with a module
+    VPC CIDR associated with a module. Block sizes must be between a 
+    /16 netmask and /28 netmask for AWS. For example: 
+    `10.0.0.0/16-10.0.0.0/28`,
+    `172.16.0.0/16-172.16.0.0/28`,
+    `192.168.0.0/16-192.168.0.0/28`
   EOT
   type        = string
   default     = "192.168.0.0/16"
 }
 
+variable "vpc_public_subnets" {
+  description = <<-EOT
+    List of VPC Public Subnets. Each subnet will be assigned to 
+    availability zone in order.
+    Mask must be not less than `/28` for AWS. Subnets should not overlap 
+    and should be in the same network with `vpc_cidr`
+  EOT
+  type        = list(string)
+  default     = []
+}
+
+variable "vpc_private_subnets" {
+  description = <<-EOT
+    List of VPC Private Subnet. Each subnet will be assigned to 
+    availability zone in order.
+    Mask must be not less than `/28` for AWS. Subnets should not overlap 
+    and should be in the same network with `vpc_cidr`
+  EOT
+  type        = list(string)
+  default     = []
+}
+
 variable "vpc_public_subnet_tmpl" {
   description = <<-EOT
-    VPC Public Subnet Template
+    VPC Public Subnet Template. Created for convenient use for a person 
+    who is quite not enough familiar with networks and subnetworks. 
+    Each index from the list of availability zones will be replaced 
+    accordingly instead of the placeholder `%d`. Will be ignored if 
+    variable `vpc_public_subnets` defined.
   EOT
   type        = string
   default     = "192.168.%d.0/24"
@@ -61,7 +91,11 @@ variable "vpc_public_subnet_tmpl" {
 
 variable "vpc_private_subnet_tmpl" {
   description = <<-EOT
-    VPC Private Subnet Template
+    VPC Private Subnet Template. Created for convenient use for a person 
+    who is quite not enough familiar with networks and subnetworks. 
+    Each index from the list of availability zones will be replaced 
+    accordingly instead of the placeholder `%d`. Will be ignored if 
+    variable `vpc_private_subnet` defined.
   EOT
   type        = string
   default     = "192.168.10%d.0/24"

@@ -6,13 +6,19 @@ module "vpc" {
   default_vpc_name = format(local.name_tmpl, "vpc")
   cidr             = var.vpc_cidr
   azs              = data.aws_availability_zones.current.names
-  private_subnets = formatlist(
-    var.vpc_private_subnet_tmpl,
-    range(1, length(data.aws_availability_zones.current.names) + 1)
+  private_subnets = (var.vpc_private_subnets != []
+    ? var.vpc_private_subnets
+    : formatlist(
+      var.vpc_private_subnet_tmpl,
+      range(1, length(data.aws_availability_zones.current.names) + 1)
+    )
   )
-  public_subnets = formatlist(
-    var.vpc_public_subnet_tmpl,
-    range(1, length(data.aws_availability_zones.current.names) + 1)
+  public_subnets = (var.vpc_public_subnets != []
+    ? var.vpc_public_subnets
+    : formatlist(
+      var.vpc_public_subnet_tmpl,
+      range(1, length(data.aws_availability_zones.current.names) + 1)
+    )
   )
   enable_nat_gateway   = true
   single_nat_gateway   = true

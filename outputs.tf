@@ -46,7 +46,7 @@ output "route_table" {
     Route Table ID assigned to the current Vault HA cluster subnet. 
     Depends on which subnetwork assigned to instances Private or Public. 
   EOT
-  value       = (
+  value = (
     var.node_allow_public
     ? module.vpc.public_route_table_ids[0]
     : module.vpc.private_route_table_ids[0]

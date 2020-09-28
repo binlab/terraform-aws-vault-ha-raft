@@ -252,9 +252,11 @@ $ terraform destroy
 | ssh\_port | Listening SSH port on instancies in public and private networks. <br>Changes used only when "ca\_ssh\_public\_key" set otherwise it equal <br>to 22 as default | `number` | `22` | no |
 | tags | Map of tags assigned to each or created resources in AWS. <br>By default, used predefined described map in a file "locals.tf".<br>Each of them can be overwritten here separately. | `map(string)` | `{}` | no |
 | vault\_ui | Enables the built-in Vault web UI | `bool` | `true` | no |
-| vpc\_cidr | VPC CIDR associated with a module | `string` | `"192.168.0.0/16"` | no |
-| vpc\_private\_subnet\_tmpl | VPC Private Subnet Template | `string` | `"192.168.10%d.0/24"` | no |
-| vpc\_public\_subnet\_tmpl | VPC Public Subnet Template | `string` | `"192.168.%d.0/24"` | no |
+| vpc\_cidr | VPC CIDR associated with a module. Block sizes must be between a <br>/16 netmask and /28 netmask for AWS. For example:<br>`10.0.0.0/16-10.0.0.0/28`, <br>`172.16.0.0/16-172.16.0.0/28`,<br>`192.168.0.0/16-192.168.0.0/28` | `string` | `"192.168.0.0/16"` | no |
+| vpc\_private\_subnet\_tmpl | VPC Private Subnet Template. Created for convenient use for a person <br>who is quite not enough familiar with networks and subnetworks. <br>Each index from the list of availability zones will be replaced <br>accordingly instead of the placeholder `%d`. Will be ignored if <br>variable `vpc_private_subnet` defined. | `string` | `"192.168.10%d.0/24"` | no |
+| vpc\_private\_subnets | List of VPC Private Subnet. Each subnet will be assigned to <br>availability zone in order.<br>Mask must be not less than `/28` for AWS. Subnets should not overlap <br>and should be in the same network with `vpc_cidr` | `list(string)` | `[]` | no |
+| vpc\_public\_subnet\_tmpl | VPC Public Subnet Template. Created for convenient use for a person <br>who is quite not enough familiar with networks and subnetworks. <br>Each index from the list of availability zones will be replaced <br>accordingly instead of the placeholder `%d`. Will be ignored if <br>variable `vpc_public_subnets` defined. | `string` | `"192.168.%d.0/24"` | no |
+| vpc\_public\_subnets | List of VPC Public Subnets. Each subnet will be assigned to <br>availability zone in order.<br>Mask must be not less than `/28` for AWS. Subnets should not overlap <br>and should be in the same network with `vpc_cidr` | `list(string)` | `[]` | no |
 
 ## Outputs
 
