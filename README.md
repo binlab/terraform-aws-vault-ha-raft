@@ -149,7 +149,7 @@ $ terraform destroy
 - [ ] Add configuration for an external Vault Audit Device via [syslog](https://www.vaultproject.io/docs/audit/syslog) or [socket](https://www.vaultproject.io/docs/audit/socket)
 - [ ] *Third-party plugins* installation support
 - [ ] Add optional opened `HTTP` port on **ALB** and setup redirect from `HTTP` to `HTTPS`. Canonical support 
-- [ ] Disable **NAT Gateway** by default (*for reducing costs consumptions*)
+- [x] Disable **NAT Gateway** by default (*for reducing costs consumptions and security improvement*) - [#27](https://github.com/binlab/terraform-aws-vault-ha-raft/issues/27)
 - [ ] Option to disable **Route 53** internal zone for (*reducing costs consumptions*)
 - [ ] Add **EFS** storage support as a persistent **Raft** data storage
 - [ ] Add option to disable creating an additional **EFS** (*for reducing costs consumptions*)
@@ -220,7 +220,7 @@ $ terraform destroy
 | cluster\_allowed\_subnets | Allowed IPs to connect to a cluster on ALB endpoint | `list(string)` | <pre>[<br>  "0.0.0.0/0"<br>]</pre> | no |
 | cluster\_count | Count of nodes in cluster across all availability zones | `number` | `3` | no |
 | cluster\_description | Description for Tags in all resources.<br>Also used as a prefix for certificates "common\_name",<br>"organizational\_unit" and "organization" fields | `string` | `"Hashicorp Vault HA Cluster"` | no |
-| cluster\_domain | Public cluster domain that will be assigned as CNAME record to <br>ALB endpoint. If not set ALB endpoint will be used | `string` | `""` | no |
+| cluster\_domain | Public cluster domain that will be assigned as CNAME record to<br>ALB endpoint. If not set ALB endpoint will be used | `string` | `""` | no |
 | cluster\_name | Name of a cluster, and tag "Name", can be a project name.<br>Format of "Name" tag "<cluster\_prefix>-<cluster\_name>-<resource>" | `string` | `"vault-ha"` | no |
 | cluster\_port | External port on ALB endpoint to a public connection | `number` | `443` | no |
 | cluster\_prefix | Prefix of a tag "Name", can be a namespace.<br>Format of "Name" tag "<cluster\_prefix>-<cluster\_name>-<resource>" | `string` | `"tf-"` | no |
@@ -232,6 +232,7 @@ $ terraform destroy
 | docker\_repo | Vault Docker repository URI | `string` | `"docker://vault"` | no |
 | docker\_tag | Vault Docker image version tag | `string` | `"1.4.2"` | no |
 | internal\_zone | Name for internal domain zone. Need for assigning domain names <br>to each of nodes for cluster server-to-server communication.<br>Also used for SSH connection over Bastion host. | `string` | `"vault.int"` | no |
+| nat\_enabled | Determines to enable or disable creating NAT gateway and assigning <br>it to VPC Private Subnet. If you intend to use Vault only with <br>internal resources and internal network, you can disable this option <br>otherwise, you need to enable it. Allowing external routing might be <br>a potential security vulnerability. Also, enabling these options <br>will be additional money costs and not covered by the AWS Free Tier <br>program. | `bool` | `false` | no |
 | node\_allow\_public | Assign public network to nodes (EC2 Instances). EC2 will be <br>available publicly with HTTPS "node\_port" ports and SSH "ssh\_port". <br>For debugging only, don't use on production! | `bool` | `false` | no |
 | node\_allowed\_subnets | If variable "node\_allow\_public" is set to "true" - list of these <br>IPs will be allowed to connect to Vault node directly (to instances) | `list(string)` | <pre>[<br>  "0.0.0.0/32"<br>]</pre> | no |
 | node\_cert\_hours\_valid | The number of hours after initial issuing that the certificate <br>will become invalid for Vault node. The certificate used for <br>internal communication in a cluster by peers and to connect from <br>ALB. Not recommended set a small value as there is no reissuance <br>mechanism without applying of the Terraform | `number` | `43800` | no |
@@ -252,7 +253,7 @@ $ terraform destroy
 | ssh\_port | Listening SSH port on instancies in public and private networks. <br>Changes used only when "ca\_ssh\_public\_key" set otherwise it equal <br>to 22 as default | `number` | `22` | no |
 | tags | Map of tags assigned to each or created resources in AWS. <br>By default, used predefined described map in a file "locals.tf".<br>Each of them can be overwritten here separately. | `map(string)` | `{}` | no |
 | vault\_ui | Enables the built-in Vault web UI | `bool` | `true` | no |
-| vpc\_cidr | VPC CIDR associated with a module. Block sizes must be between a <br>/16 netmask and /28 netmask for AWS. For example:<br>`10.0.0.0/16-10.0.0.0/28`, <br>`172.16.0.0/16-172.16.0.0/28`,<br>`192.168.0.0/16-192.168.0.0/28` | `string` | `"192.168.0.0/16"` | no |
+| vpc\_cidr | VPC CIDR associated with a module. Block sizes must be between a <br>/16 netmask and /28 netmask for AWS. For example: <br>`10.0.0.0/16-10.0.0.0/28`,<br>`172.16.0.0/16-172.16.0.0/28`,<br>`192.168.0.0/16-192.168.0.0/28` | `string` | `"192.168.0.0/16"` | no |
 | vpc\_private\_subnet\_tmpl | VPC Private Subnet Template. Created for convenient use for a person <br>who is quite not enough familiar with networks and subnetworks. <br>Each index from the list of availability zones will be replaced <br>accordingly instead of the placeholder `%d`. Will be ignored if <br>variable `vpc_private_subnet` defined. | `string` | `"192.168.10%d.0/24"` | no |
 | vpc\_private\_subnets | List of VPC Private Subnet. Each subnet will be assigned to <br>availability zone in order.<br>Mask must be not less than `/28` for AWS. Subnets should not overlap <br>and should be in the same network with `vpc_cidr` | `list(string)` | `[]` | no |
 | vpc\_public\_subnet\_tmpl | VPC Public Subnet Template. Created for convenient use for a person <br>who is quite not enough familiar with networks and subnetworks. <br>Each index from the list of availability zones will be replaced <br>accordingly instead of the placeholder `%d`. Will be ignored if <br>variable `vpc_public_subnets` defined. | `string` | `"192.168.%d.0/24"` | no |
@@ -265,7 +266,7 @@ $ terraform destroy
 | alb\_dns\_name | ALB external endpoint DNS name. Should use to assign <br>"CNAME" record of public domain |
 | alb\_zone\_id | ALB canonical hosted Zone ID of the load balancer.<br>Should use to assign Route 53 "Alias" record (AWS only). |
 | cluster\_url | Cluster public URL with schema, domain, and port.<br>All parameters depend on inputs values and calculated automatically <br>for convenient use. Can be created separately outside a module |
-| nat\_public\_ips | NAT public IPs assigned as an external IP for requests from <br>each of the nodes. Convenient to use for restrict application, <br>audit logs, some security groups, or other IP-based security <br>policies. Note: if set "node\_allow\_public" each node will get <br>its own public IP which will be used for external requests |
+| nat\_public\_ips | NAT public IPs assigned as an external IP for requests from <br>each of the nodes. Convenient to use for restrict application, <br>audit logs, some security groups, or other IP-based security <br>policies. Note: if set "node\_allow\_public" each node will get <br>its own public IP which will be used for external requests.<br>If `var.nat_enabled` set to `false` returns an empty list. |
 | private\_subnets | List of Private Subnet IDs created in a module and associated with it. <br>Under the hood is using "NAT Gateway" to external connections for the <br>"Route 0.0.0.0/0". When variable "node\_allow\_public" = false, this <br>network assigned to the instancies. For other cases, this useful to <br>assign another resource in this VPS for example Database which can <br>work behind a NAT (or without NAT at all and external connections <br>for security reasons) and not needs to be exposed publicly by own IP. |
 | public\_subnets | List of Public Subnet IDs created in a module and associated with it. <br>Under the hood is using "Internet Gateway" to external connections <br>for the "Route 0.0.0.0/0". When variable "node\_allow\_public" = true, <br>this network assigned to the instancies. For other cases this useful <br>to assign another resource in this VPS for example Bastion host which <br>need to be exposed publicly by own IP and not behind a NAT. |
 | route\_table | Route Table ID assigned to the current Vault HA cluster subnet. <br>Depends on which subnetwork assigned to instances Private or Public. |
