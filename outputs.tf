@@ -97,7 +97,12 @@ output "nat_public_ips" {
     each of the nodes. Convenient to use for restrict application, 
     audit logs, some security groups, or other IP-based security 
     policies. Note: if set "node_allow_public" each node will get 
-    its own public IP which will be used for external requests
+    its own public IP which will be used for external requests.
+    If `var.nat_enabled` set to `false` returns an empty list.
   EOT
-  value       = [aws_eip.nat.public_ip]
+  value = (
+    var.nat_enabled
+    ? [element(aws_eip.nat, 0).public_ip]
+    : []
+  )
 }

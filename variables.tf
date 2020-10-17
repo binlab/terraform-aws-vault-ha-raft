@@ -101,6 +101,20 @@ variable "vpc_private_subnet_tmpl" {
   default     = "192.168.10%d.0/24"
 }
 
+variable "nat_enabled" {
+  description = <<-EOT
+    Determines to enable or disable creating NAT gateway and assigning 
+    it to VPC Private Subnet. If you intend to use Vault only with 
+    internal resources and internal network, you can disable this option 
+    otherwise, you need to enable it. Allowing external routing might be 
+    a potential security vulnerability. Also, enabling these options 
+    will be additional money costs and not covered by the AWS Free Tier 
+    program.
+  EOT
+  type        = bool
+  default     = false
+}
+
 variable "cluster_port" {
   description = <<-EOT
     External port on ALB endpoint to a public connection
