@@ -149,7 +149,7 @@ $ terraform destroy
 - [ ] Add configuration for an external Vault Audit Device via [syslog](https://www.vaultproject.io/docs/audit/syslog) or [socket](https://www.vaultproject.io/docs/audit/socket)
 - [ ] *Third-party plugins* installation support
 - [ ] Add optional opened `HTTP` port on **ALB** and setup redirect from `HTTP` to `HTTPS`. Canonical support 
-- [ ] Disable **NAT Gateway** by default (*for reducing costs consumptions and security improvement*) - [#27](https://github.com/binlab/terraform-aws-vault-ha-raft/issues/27)
+- [x] Disable **NAT Gateway** by default (*for reducing costs consumptions and security improvement*) - [#27](https://github.com/binlab/terraform-aws-vault-ha-raft/issues/27)
 - [ ] Option to disable **Route 53** internal zone for (*reducing costs consumptions*)
 - [ ] Add **EFS** storage support as a persistent **Raft** data storage
 - [ ] Add option to disable creating an additional **EFS** (*for reducing costs consumptions*)
