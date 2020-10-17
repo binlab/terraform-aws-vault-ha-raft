@@ -4,7 +4,7 @@ output "vpc_id" {
     for assigning other resources to the same VPC or for configuration a 
     peering connections
   EOT
-  value       = module.vpc.vpc_id
+  value       = aws_vpc.this.id
 }
 
 output "public_subnets" {
@@ -16,7 +16,7 @@ output "public_subnets" {
     to assign another resource in this VPS for example Bastion host which 
     need to be exposed publicly by own IP and not behind a NAT.
   EOT
-  value       = module.vpc.public_subnets
+  value       = [for value in aws_subnet.public : value.id]
 }
 
 output "private_subnets" {
@@ -29,7 +29,7 @@ output "private_subnets" {
     work behind a NAT (or without NAT at all and external connections 
     for security reasons) and not needs to be exposed publicly by own IP.
   EOT
-  value       = module.vpc.private_subnets
+  value       = [for value in aws_subnet.private : value.id]
 }
 
 output "vpc_security_group" {
@@ -48,8 +48,8 @@ output "route_table" {
   EOT
   value = (
     var.node_allow_public
-    ? module.vpc.public_route_table_ids[0]
-    : module.vpc.private_route_table_ids[0]
+    ? aws_route_table.public.id
+    : aws_route_table.private.id
   )
 }
 
@@ -99,5 +99,5 @@ output "nat_public_ips" {
     policies. Note: if set "node_allow_public" each node will get 
     its own public IP which will be used for external requests
   EOT
-  value       = module.vpc.nat_public_ips
+  value       = [aws_eip.nat.public_ip]
 }
