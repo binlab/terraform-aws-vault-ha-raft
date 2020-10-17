@@ -1,7 +1,7 @@
 resource aws_security_group "vpc" {
   name        = format(local.name_tmpl, "vpc")
   description = "Internal VPC Traffic"
-  vpc_id      = module.vpc.vpc_id
+  vpc_id      = aws_vpc.this.id
 
   tags = merge(local.tags, {
     Description = "Internal VPC Traffic"
@@ -12,7 +12,7 @@ resource aws_security_group "vpc" {
 resource aws_security_group "alb" {
   name        = format(local.name_tmpl, "alb")
   description = "Allow Public Inbound Traffic to ALB"
-  vpc_id      = module.vpc.vpc_id
+  vpc_id      = aws_vpc.this.id
 
   ingress {
     description = "Allow Public Clients Connection to Vault"
@@ -48,7 +48,7 @@ resource aws_security_group "alb" {
 resource aws_security_group "node" {
   name        = format(local.name_tmpl, "node")
   description = "Allow ALB Inbound Traffic"
-  vpc_id      = module.vpc.vpc_id
+  vpc_id      = aws_vpc.this.id
 
   ingress {
     description     = "Allow Health Check from ALB"
@@ -96,7 +96,7 @@ resource aws_security_group "public" {
 
   name        = format(local.name_tmpl, "public")
   description = "Allow EC2 Instacies Public"
-  vpc_id      = module.vpc.vpc_id
+  vpc_id      = aws_vpc.this.id
 
   ingress {
     description = "Allow Public HTTP Connection to Vault on EC2"

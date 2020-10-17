@@ -3,7 +3,7 @@ resource aws_instance "node" {
 
   instance_type        = var.node_instance_type
   monitoring           = var.node_monitoring
-  availability_zone    = element(module.vpc.azs, count.index)
+  availability_zone    = element(data.aws_availability_zones.current.names, count.index)
   user_data            = data.ignition_config.node[count.index].rendered
   iam_instance_profile = var.autounseal ? aws_iam_instance_profile.autounseal[0].id : ""
 
@@ -17,8 +17,8 @@ resource aws_instance "node" {
 
   subnet_id = (
     var.node_allow_public
-    ? element(module.vpc.public_subnets, count.index)
-    : element(module.vpc.private_subnets, count.index)
+    ? element([for value in aws_subnet.public : value.id], count.index)
+    : element([for value in aws_subnet.private : value.id], count.index)
   )
 
   vpc_security_group_ids = compact([
@@ -59,7 +59,7 @@ resource aws_instance "node" {
 resource aws_ebs_volume "data" {
   count = var.cluster_count
 
-  availability_zone = element(module.vpc.azs, count.index)
+  availability_zone = element(data.aws_availability_zones.current.names, count.index)
   size              = var.data_volume_size
   type              = var.data_volume_type
 

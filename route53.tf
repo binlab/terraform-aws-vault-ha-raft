@@ -4,7 +4,7 @@ resource aws_route53_zone "int" {
   force_destroy = true
 
   vpc {
-    vpc_id = module.vpc.vpc_id
+    vpc_id = aws_vpc.this.id
   }
 
   tags = merge(local.tags, {

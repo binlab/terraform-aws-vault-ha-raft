@@ -8,7 +8,7 @@ resource aws_lb "cluster" {
   ]
 
   dynamic "subnet_mapping" {
-    for_each = module.vpc.public_subnets
+    for_each = [for value in aws_subnet.public : value.id]
     content {
       subnet_id = subnet_mapping.value
     }
@@ -37,7 +37,7 @@ resource aws_lb_target_group "cluster" {
   port        = var.node_port
   target_type = "instance"
   protocol    = "HTTPS"
-  vpc_id      = module.vpc.vpc_id
+  vpc_id      = aws_vpc.this.id
 
   health_check {
     protocol            = "HTTPS"

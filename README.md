@@ -145,7 +145,7 @@ $ terraform destroy
 - [ ] Hosted module on [Terraform Registry](https://registry.terraform.io) [#13](https://github.com/binlab/terraform-aws-vault-ha-raft/issues/13)
 - [ ] Add validation of input data in [variables.tf](variables.tf) 
 - [ ] Add support **Fedora CoreOS** as [announced](https://coreos.com/os/docs/latest/cloud-config-deprecated.html) **CoreOS Container Linux** will reach its end of life on **May 26, 2020** and will no longer receive updates.
-- [ ] Remove external dependency - *VPC Module* - [#7](https://github.com/binlab/terraform-aws-vault-ha-raft/issues/7)
+- [x] Remove external dependency - *VPC Module* - [#7](https://github.com/binlab/terraform-aws-vault-ha-raft/issues/7)
 - [ ] Add configuration for an external Vault Audit Device via [syslog](https://www.vaultproject.io/docs/audit/syslog) or [socket](https://www.vaultproject.io/docs/audit/socket)
 - [ ] *Third-party plugins* installation support
 - [ ] Add optional opened `HTTP` port on **ALB** and setup redirect from `HTTP` to `HTTPS`. Canonical support 
