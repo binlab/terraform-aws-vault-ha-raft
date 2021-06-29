@@ -55,7 +55,7 @@ resource aws_subnet "public" {
   vpc_id                  = aws_vpc.this.id
   cidr_block              = each.value.cidr_block
   availability_zone       = each.value.zone_name
-  map_public_ip_on_launch = false
+  map_public_ip_on_launch = true
 
   tags = merge(local.tags, {
     Name = format(local.name_tmpl,
