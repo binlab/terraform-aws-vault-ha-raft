@@ -84,6 +84,11 @@ variable "vpc_public_subnet_tmpl" {
     Each index from the list of availability zones will be replaced 
     accordingly instead of the placeholder `%d`. Will be ignored if 
     variable `vpc_public_subnets` defined.
+    DEPRICETED: Try to avoid use this configuration, might be removed 
+    in next versions. In this case, to avoid re-creations of cluster, 
+    just describe your exists networks by `vpc_public_subnets` 
+    parameters list for example: 
+    ["192.168.1.0/24", "192.168.2.0/24", "192.168.3.0/24", ...]
   EOT
   type        = string
   default     = "192.168.%d.0/24"
@@ -95,10 +100,69 @@ variable "vpc_private_subnet_tmpl" {
     who is quite not enough familiar with networks and subnetworks. 
     Each index from the list of availability zones will be replaced 
     accordingly instead of the placeholder `%d`. Will be ignored if 
-    variable `vpc_private_subnet` defined.
+    variable `vpc_private_subnets` defined.
+    DEPRICETED: Try to avoid use this configuration, might be removed 
+    in next versions. In this case, to avoid re-creations of cluster, 
+    just describe your exists networks by `vpc_public_subnets` 
+    parameters list for example: 
+    ["192.168.101.0/24", "192.168.102.0/24", "192.168.103.0/24", ...]
   EOT
   type        = string
   default     = "192.168.10%d.0/24"
+}
+
+variable "vpc_public_subnet_cidr" {
+  description = <<-EOT
+    CIDR block for public subnet, must be canonical form, be in the same 
+    network with VPC and non-overlapping with other subnets. For example:
+    subnet `/25`, (e.g. `172.31.31.0/25`) can contain up to 16 subnets 
+    with a mask `/28` (subnet mask must be not less than `/28` for AWS)
+  EOT
+  type        = string
+  default     = null # "172.31.31.0/25"
+}
+
+variable "vpc_private_subnet_cidr" {
+  description = <<-EOT
+    CIDR block for private subnet, must be canonical form, be in the same 
+    network with VPC and non-overlapping with other subnets. For example:
+    subnet `/25`, (e.g. `172.31.31.0/25`) can contain up to 16 subnets 
+    with a mask `/28` (subnet mask must be not less than `/28` for AWS)
+  EOT
+  type        = string
+  default     = null # "172.31.31.128/25"
+}
+
+variable "vpc_public_subnet_mask" {
+  description = <<-EOT
+    Size of public subnet. The subnet mask must be not less than `/28` 
+    for AWS. Mask /28 can contain up to 16 IP addresses but AWS reserved 
+    5 addresses so 11 available for user. More: 
+    https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Subnets.html
+  EOT
+  type        = number
+  default     = 28
+}
+
+variable "vpc_private_subnet_mask" {
+  description = <<-EOT
+    Size of private subnet. The subnet mask must be not less than `/28` 
+    for AWS. Mask /28 can contain up to 16 IP addresses but AWS reserved 
+    5 addresses so 11 available for user. More: 
+    https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Subnets.html
+  EOT
+  type        = number
+  default     = 28
+}
+
+variable "vpc_id_external" {
+  description = <<-EOT
+    Provide existing external AWS VPC ID. If so configure corresponding 
+    `vpc_public_subnet_cidr` and `vpc_private_subnet_cidr` to match 
+    external VPC CIDR
+  EOT
+  type        = string
+  default     = null
 }
 
 variable "nat_enabled" {
@@ -110,9 +174,9 @@ variable "nat_enabled" {
     a potential security vulnerability. Also, enabling these options 
     will be additional money costs and not covered by the AWS Free Tier 
     program.
-    ___ IMPORTANT:__ since during the creation of the cluster, the 
-    instance needs to get a docker image, then it is necessary to 
-    enable `nat enabled` at the first initialization
+    IMPORTANT: since during the creation of the cluster, the instance 
+    needs to get a docker image, then it is necessary to enable 
+    `nat_enabled` at the first initialization
   EOT
   type        = bool
   default     = false

@@ -2,9 +2,9 @@ output "vpc_id" {
   description = <<-EOT
     VPC ID created in a module and associated with it. Need to be exposed 
     for assigning other resources to the same VPC or for configuration a 
-    peering connections
+    peering connections. If configured `vpc_id_external` will return it
   EOT
-  value       = aws_vpc.this.id
+  value       = local.vpc_id
 }
 
 output "public_subnets" {
