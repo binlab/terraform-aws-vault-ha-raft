@@ -84,9 +84,9 @@ variable "vpc_public_subnet_tmpl" {
     Each index from the list of availability zones will be replaced 
     accordingly instead of the placeholder `%d`. Will be ignored if 
     variable `vpc_public_subnets` defined.
-    __DEPRICETED:__ Try to avoid use this configuration, might be 
-    removed in next versions. In this case, to avoid re-creations of 
-    cluster, just describe your exists networks by `vpc_public_subnets` 
+    DEPRICETED: Try to avoid use this configuration, might be removed 
+    in next versions. In this case, to avoid re-creations of cluster, 
+    just describe your exists networks by `vpc_public_subnets` 
     parameters list for example: 
     ["192.168.1.0/24", "192.168.2.0/24", "192.168.3.0/24", ...]
   EOT
@@ -101,9 +101,9 @@ variable "vpc_private_subnet_tmpl" {
     Each index from the list of availability zones will be replaced 
     accordingly instead of the placeholder `%d`. Will be ignored if 
     variable `vpc_private_subnets` defined.
-    __DEPRICETED:__ Try to avoid use this configuration, might be 
-    removed in next versions. In this case, to avoid re-creations of 
-    cluster, just describe your exists networks by `vpc_public_subnets` 
+    DEPRICETED: Try to avoid use this configuration, might be removed 
+    in next versions. In this case, to avoid re-creations of cluster, 
+    just describe your exists networks by `vpc_public_subnets` 
     parameters list for example: 
     ["192.168.101.0/24", "192.168.102.0/24", "192.168.103.0/24", ...]
   EOT
@@ -174,9 +174,9 @@ variable "nat_enabled" {
     a potential security vulnerability. Also, enabling these options 
     will be additional money costs and not covered by the AWS Free Tier 
     program.
-    ___ IMPORTANT:__ since during the creation of the cluster, the 
-    instance needs to get a docker image, then it is necessary to 
-    enable `nat enabled` at the first initialization
+    IMPORTANT: since during the creation of the cluster, the instance 
+    needs to get a docker image, then it is necessary to enable 
+    `nat_enabled` at the first initialization
   EOT
   type        = bool
   default     = false
