@@ -43,6 +43,15 @@ variable "cluster_domain" {
   default     = ""
 }
 
+variable "internet_gateway_id_external" {
+  description = <<-EOT
+    Provide existing external internet gateway id for AWS VPC
+  EOT
+  type        = string
+  default     = null
+}
+
+
 variable "vpc_cidr" {
   description = <<-EOT
     VPC CIDR associated with a module. Block sizes must be between a 
