@@ -54,6 +54,11 @@ resource aws_instance "node" {
     volume_type           = var.node_volume_type
     delete_on_termination = true
   }
+
+  depends_on = [
+    aws_subnet.public,
+    aws_subnet.private,
+  ]
 }
 
 resource aws_ebs_volume "data" {

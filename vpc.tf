@@ -1,12 +1,12 @@
 locals {
-  public_subnets_list = (var.vpc_public_subnets != []
+  public_subnets_list = (length(var.vpc_public_subnets) != 0
     ? var.vpc_public_subnets
     : formatlist(
       var.vpc_public_subnet_tmpl,
       range(1, length(data.aws_availability_zones.current.names) + 1)
     )
   )
-  private_subnets_list = (var.vpc_private_subnets != []
+  private_subnets_list = (length(var.vpc_private_subnets) != 0
     ? var.vpc_private_subnets
     : formatlist(
       var.vpc_private_subnet_tmpl,
@@ -55,7 +55,7 @@ resource aws_subnet "public" {
   vpc_id                  = aws_vpc.this.id
   cidr_block              = each.value.cidr_block
   availability_zone       = each.value.zone_name
-  map_public_ip_on_launch = false
+  map_public_ip_on_launch = true
 
   tags = merge(local.tags, {
     Name = format(local.name_tmpl,
