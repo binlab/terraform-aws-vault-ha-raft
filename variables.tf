@@ -110,6 +110,9 @@ variable "nat_enabled" {
     a potential security vulnerability. Also, enabling these options 
     will be additional money costs and not covered by the AWS Free Tier 
     program.
+    ___ IMPORTANT:__ since during the creation of the cluster, the 
+    instance needs to get a docker image, then it is necessary to 
+    enable `nat enabled` at the first initialization
   EOT
   type        = bool
   default     = false

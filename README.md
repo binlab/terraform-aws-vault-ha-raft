@@ -89,6 +89,8 @@ For deploying you need a list of permissions. For beginners might be difficult t
 
 ## Usage
 
+__IMPORTANT:__ *The last code from master might need to temporary enable the option `nat_enabled` (access to external resources) at the first initialization since, during the creation of the cluster, the instance needs to get a docker image. An alternative could be placing the cluster on a public subnet*
+
 The module can be deployed with almost default values of variables. For more details of the default values looking [here](#inputs)
 
 ```hcl
@@ -232,7 +234,7 @@ $ terraform destroy
 | docker\_repo | Vault Docker repository URI | `string` | `"docker://vault"` | no |
 | docker\_tag | Vault Docker image version tag | `string` | `"1.4.2"` | no |
 | internal\_zone | Name for internal domain zone. Need for assigning domain names <br>to each of nodes for cluster server-to-server communication.<br>Also used for SSH connection over Bastion host. | `string` | `"vault.int"` | no |
-| nat\_enabled | Determines to enable or disable creating NAT gateway and assigning <br>it to VPC Private Subnet. If you intend to use Vault only with <br>internal resources and internal network, you can disable this option <br>otherwise, you need to enable it. Allowing external routing might be <br>a potential security vulnerability. Also, enabling these options <br>will be additional money costs and not covered by the AWS Free Tier <br>program. | `bool` | `false` | no |
+| nat\_enabled | Determines to enable or disable creating NAT gateway and assigning <br>it to VPC Private Subnet. If you intend to use Vault only with <br>internal resources and internal network, you can disable this option <br>otherwise, you need to enable it. Allowing external routing might be <br>a potential security vulnerability. Also, enabling these options <br>will be additional money costs and not covered by the AWS Free Tier <br>program.<br>___ IMPORTANT:\_\_ since during the creation of the cluster, the <br>instance needs to get a docker image, then it is necessary to <br>enable `nat enabled` at the first initialization | `bool` | `false` | no |
 | node\_allow\_public | Assign public network to nodes (EC2 Instances). EC2 will be <br>available publicly with HTTPS "node\_port" ports and SSH "ssh\_port". <br>For debugging only, don't use on production! | `bool` | `false` | no |
 | node\_allowed\_subnets | If variable "node\_allow\_public" is set to "true" - list of these <br>IPs will be allowed to connect to Vault node directly (to instances) | `list(string)` | <pre>[<br>  "0.0.0.0/32"<br>]</pre> | no |
 | node\_cert\_hours\_valid | The number of hours after initial issuing that the certificate <br>will become invalid for Vault node. The certificate used for <br>internal communication in a cluster by peers and to connect from <br>ALB. Not recommended set a small value as there is no reissuance <br>mechanism without applying of the Terraform | `number` | `43800` | no |
