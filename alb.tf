@@ -37,7 +37,7 @@ resource aws_lb_target_group "cluster" {
   port        = var.node_port
   target_type = "instance"
   protocol    = "HTTPS"
-  vpc_id      = aws_vpc.this.id
+  vpc_id      = local.vpc_id
 
   health_check {
     protocol            = "HTTPS"
