@@ -139,6 +139,7 @@ $ terraform destroy
   1. [Assigning CNAME and Route 53 Alias to Vault HA cluster](examples/route53-dns-records/)
   1. [Assigning module's VPC to external resources e.g. Bastion host](examples/vpc-assign-bastion/)
   1. [VPC Peering different networks e.g. RDS Database](examples/vpc-peering-rds/)
+  1. [Assigning Vault cluster to inside an already created (external) AWS VPC](examples/assign-external-vpc/)
 
 
 ## TODO
