@@ -14,7 +14,7 @@ terraform {
     }
     ignition = {
       source  = "community-terraform-providers/ignition"
-      version = "1.3.0"
+      version = "~> 1.3.0"
       # Ignition version 0.34 supported by flatcar
       # https://registry.terraform.io/providers/community-terraform-providers/ignition/latest/docs#ignition-versions
       # https://kinvolk.io/flatcar-container-linux/releases/
