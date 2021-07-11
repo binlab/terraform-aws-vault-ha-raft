@@ -1,4 +1,4 @@
-resource aws_route53_zone "int" {
+resource "aws_route53_zone" "int" {
   name          = var.internal_zone
   comment       = "Private zone for Vault HA Cluster"
   force_destroy = true
@@ -13,7 +13,7 @@ resource aws_route53_zone "int" {
   })
 }
 
-resource aws_route53_record "int" {
+resource "aws_route53_record" "int" {
   count = var.cluster_count
 
   zone_id = aws_route53_zone.int.zone_id

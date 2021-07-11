@@ -43,6 +43,15 @@ variable "cluster_domain" {
   default     = ""
 }
 
+variable "internet_gateway_id_external" {
+  description = <<-EOT
+    Provide existing external internet gateway id for AWS VPC
+  EOT
+  type        = string
+  default     = null
+}
+
+
 variable "vpc_cidr" {
   description = <<-EOT
     VPC CIDR associated with a module. Block sizes must be between a 
@@ -427,7 +436,7 @@ variable "seal_awskms" {
     wrapping mechanism. If set will disable "seal_transit". 
     More: https://www.vaultproject.io/docs/configuration/seal/awskms
   EOT
-  type        = map
+  type        = map(any)
   default     = {}
 }
 
@@ -437,7 +446,7 @@ variable "seal_transit" {
     Transit Secret Engine as the autoseal mechanism. 
     More: https://www.vaultproject.io/docs/configuration/seal/transit
   EOT
-  type        = map
+  type        = map(any)
   default     = {}
 }
 

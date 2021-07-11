@@ -1,4 +1,4 @@
-resource aws_lb "cluster" {
+resource "aws_lb" "cluster" {
   name               = format(local.name_tmpl, "alb")
   internal           = false
   load_balancer_type = "application"
@@ -19,7 +19,7 @@ resource aws_lb "cluster" {
   })
 }
 
-resource aws_lb_listener "cluster" {
+resource "aws_lb_listener" "cluster" {
   load_balancer_arn = aws_lb.cluster.arn
   port              = var.cluster_port
   protocol          = var.certificate_arn != "" ? "HTTPS" : "HTTP"
@@ -32,7 +32,7 @@ resource aws_lb_listener "cluster" {
   }
 }
 
-resource aws_lb_target_group "cluster" {
+resource "aws_lb_target_group" "cluster" {
   name        = format(local.name_tmpl, "group")
   port        = var.node_port
   target_type = "instance"
@@ -51,7 +51,7 @@ resource aws_lb_target_group "cluster" {
   }
 }
 
-resource aws_lb_target_group_attachment "cluster" {
+resource "aws_lb_target_group_attachment" "cluster" {
   count = length(aws_instance.node)
 
   target_group_arn = aws_lb_target_group.cluster.arn

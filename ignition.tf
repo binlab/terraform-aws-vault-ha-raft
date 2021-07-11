@@ -1,4 +1,4 @@
-data ignition_user "core" {
+data "ignition_user" "core" {
   name = "core"
   uid  = 500
   ssh_authorized_keys = (
@@ -8,14 +8,14 @@ data ignition_user "core" {
   )
 }
 
-data ignition_user "admin" {
+data "ignition_user" "admin" {
   count = local.ca_ssh_public_keys ? 1 : 0
 
   name = "admin"
   uid  = 1000
 }
 
-data ignition_file "sshd_config" {
+data "ignition_file" "sshd_config" {
   count = local.ca_ssh_public_keys ? 1 : 0
 
   filesystem = "root"
@@ -40,7 +40,7 @@ data ignition_file "sshd_config" {
   }
 }
 
-data ignition_file "auth_principals_core" {
+data "ignition_file" "auth_principals_core" {
   count = local.ca_ssh_public_keys ? 1 : 0
 
   filesystem = "root"
@@ -54,7 +54,7 @@ data ignition_file "auth_principals_core" {
   }
 }
 
-data ignition_file "auth_principals_admin" {
+data "ignition_file" "auth_principals_admin" {
   count = local.ca_ssh_public_keys ? 1 : 0
 
   filesystem = "root"
@@ -68,7 +68,7 @@ data ignition_file "auth_principals_admin" {
   }
 }
 
-data ignition_file "ca_ssh_public_keys" {
+data "ignition_file" "ca_ssh_public_keys" {
   count = local.ca_ssh_public_keys ? 1 : 0
 
   filesystem = "root"
@@ -82,7 +82,7 @@ data ignition_file "ca_ssh_public_keys" {
   }
 }
 
-data ignition_file "ca_tls_public_keys" {
+data "ignition_file" "ca_tls_public_keys" {
   count = local.ca_tls_public_keys ? 1 : 0
 
   filesystem = "root"
@@ -96,7 +96,7 @@ data ignition_file "ca_tls_public_keys" {
   }
 }
 
-data ignition_file "config" {
+data "ignition_file" "config" {
   count = var.cluster_count
 
   filesystem = "root"
@@ -150,7 +150,7 @@ data ignition_file "config" {
   }
 }
 
-data ignition_filesystem "data" {
+data "ignition_filesystem" "data" {
   name = "vault"
   mount {
     device          = "/dev/sdh"
@@ -159,7 +159,7 @@ data ignition_filesystem "data" {
   }
 }
 
-data ignition_systemd_unit "mount" {
+data "ignition_systemd_unit" "mount" {
   name    = "vault.mount"
   content = <<-EOT
     [Unit]
@@ -173,7 +173,7 @@ data ignition_systemd_unit "mount" {
   EOT
 }
 
-data ignition_file "helper" {
+data "ignition_file" "helper" {
   count = var.cluster_count > 1 ? 1 : 0
 
   filesystem = "root"
@@ -205,7 +205,7 @@ data ignition_file "helper" {
   }
 }
 
-data ignition_systemd_unit "service" {
+data "ignition_systemd_unit" "service" {
   name    = "vault.service"
   content = <<-EOT
     [Unit]
@@ -239,7 +239,7 @@ data ignition_systemd_unit "service" {
   EOT
 }
 
-data ignition_file "node_ca" {
+data "ignition_file" "node_ca" {
   filesystem = "root"
   path       = "/etc/vault/node-ca.cert"
   mode       = 256 ### 0400
@@ -251,7 +251,7 @@ data ignition_file "node_ca" {
   }
 }
 
-data ignition_file "node_key" {
+data "ignition_file" "node_key" {
   count = var.cluster_count
 
   filesystem = "root"
@@ -265,7 +265,7 @@ data ignition_file "node_key" {
   }
 }
 
-data ignition_file "node_cert" {
+data "ignition_file" "node_cert" {
   count = var.cluster_count
 
   filesystem = "root"
@@ -279,7 +279,7 @@ data ignition_file "node_cert" {
   }
 }
 
-data ignition_config "node" {
+data "ignition_config" "node" {
   count = var.cluster_count
 
   users = [

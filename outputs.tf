@@ -41,6 +41,15 @@ output "vpc_security_group" {
   value       = aws_security_group.vpc.id
 }
 
+output "node_security_group" {
+  description = <<-EOT
+    Node Security Group ID which allow connecting from vpc and alb 
+    security groups
+  EOT
+  value       = aws_security_group.node.id
+}
+
+
 output "route_table" {
   description = <<-EOT
     Route Table ID assigned to the current Vault HA cluster subnet. 

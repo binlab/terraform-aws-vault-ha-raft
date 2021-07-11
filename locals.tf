@@ -7,7 +7,8 @@ locals {
   ca_tls_public_keys   = length(var.ca_tls_public_keys) == 0 ? false : true
   ssh_authorized_keys  = length(var.ssh_authorized_keys) == 0 ? false : true
 
-  vpc_id = var.vpc_id_external != null ? var.vpc_id_external : aws_vpc.this[0].id
+  vpc_id              = var.vpc_id_external != null ? var.vpc_id_external : aws_vpc.this[0].id
+  internet_gateway_id = var.internet_gateway_id_external != null ? var.internet_gateway_id_external : aws_internet_gateway.public[0].id
 
   tags = merge({
     Description = var.cluster_description

@@ -1,4 +1,4 @@
-data aws_ami "coreos" {
+data "aws_ami" "coreos" {
   count = var.ami_image == "" && var.ami_vendor == "coreos" ? 1 : 0
 
   most_recent = true
@@ -22,7 +22,7 @@ data aws_ami "coreos" {
   }
 }
 
-data aws_ami "flatcar" {
+data "aws_ami" "flatcar" {
   count = var.ami_image == "" && var.ami_vendor == "flatcar" ? 1 : 0
 
   most_recent = true

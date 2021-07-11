@@ -1,4 +1,4 @@
-resource aws_instance "node" {
+resource "aws_instance" "node" {
   count = var.cluster_count
 
   instance_type        = var.node_instance_type
@@ -61,7 +61,7 @@ resource aws_instance "node" {
   ]
 }
 
-resource aws_ebs_volume "data" {
+resource "aws_ebs_volume" "data" {
   count = var.cluster_count
 
   availability_zone = element(data.aws_availability_zones.current.names, count.index)
@@ -74,7 +74,7 @@ resource aws_ebs_volume "data" {
   })
 }
 
-resource aws_volume_attachment "node" {
+resource "aws_volume_attachment" "node" {
   count = var.cluster_count
 
   device_name = "/dev/sdh"

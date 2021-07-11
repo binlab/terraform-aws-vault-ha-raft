@@ -2,7 +2,7 @@
 #                           SSH Authorized Key                            #
 ###########################################################################
 
-resource tls_private_key "core" {
+resource "tls_private_key" "core" {
   count = local.ssh_authorized_keys ? 0 : 1
 
   algorithm = "RSA"
@@ -13,7 +13,7 @@ resource tls_private_key "core" {
 #                              Root CA Cert                               #
 ###########################################################################
 
-resource tls_private_key "ca" {
+resource "tls_private_key" "ca" {
   algorithm = "RSA"
   rsa_bits  = 2048
 
@@ -22,7 +22,7 @@ resource tls_private_key "ca" {
   }
 }
 
-resource tls_self_signed_cert "ca" {
+resource "tls_self_signed_cert" "ca" {
   key_algorithm      = "RSA"
   private_key_pem    = tls_private_key.ca.private_key_pem
   is_ca_certificate  = true
@@ -52,7 +52,7 @@ resource tls_self_signed_cert "ca" {
 #                                Node Cert                                #
 ###########################################################################
 
-resource tls_private_key "node" {
+resource "tls_private_key" "node" {
   count = var.cluster_count
 
   algorithm   = "RSA"
@@ -64,7 +64,7 @@ resource tls_private_key "node" {
   }
 }
 
-resource tls_cert_request "node" {
+resource "tls_cert_request" "node" {
   count = var.cluster_count
 
   key_algorithm   = "RSA"
@@ -81,7 +81,7 @@ resource tls_cert_request "node" {
   }
 }
 
-resource tls_locally_signed_cert "node" {
+resource "tls_locally_signed_cert" "node" {
   count = var.cluster_count
 
   cert_request_pem   = tls_cert_request.node[count.index].cert_request_pem
