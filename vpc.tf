@@ -49,7 +49,7 @@ locals {
 #                              Cluster VPC                             #
 ########################################################################
 
-resource aws_vpc "this" {
+resource "aws_vpc" "this" {
   count = var.vpc_id_external != null ? 0 : 1
 
   cidr_block           = var.vpc_cidr
@@ -65,7 +65,7 @@ resource aws_vpc "this" {
 #                             Public Subnet                            #
 ########################################################################
 
-resource aws_subnet "public" {
+resource "aws_subnet" "public" {
   for_each = local.vpc_public_subnets
 
   vpc_id                  = local.vpc_id
@@ -83,7 +83,7 @@ resource aws_subnet "public" {
   })
 }
 
-resource aws_route_table "public" {
+resource "aws_route_table" "public" {
   vpc_id = local.vpc_id
 
   tags = merge(local.tags, {
@@ -91,14 +91,14 @@ resource aws_route_table "public" {
   })
 }
 
-resource aws_route_table_association "public" {
+resource "aws_route_table_association" "public" {
   for_each = aws_subnet.public
 
   subnet_id      = each.value.id
   route_table_id = aws_route_table.public.id
 }
 
-resource aws_internet_gateway "public" {
+resource "aws_internet_gateway" "public" {
   count = var.internet_gateway_id_external != null ? 0 : 1
 
   vpc_id = local.vpc_id
@@ -108,7 +108,7 @@ resource aws_internet_gateway "public" {
   })
 }
 
-resource aws_route "public" {
+resource "aws_route" "public" {
   route_table_id         = aws_route_table.public.id
   gateway_id             = local.internet_gateway_id
   destination_cidr_block = "0.0.0.0/0"
@@ -118,7 +118,7 @@ resource aws_route "public" {
 #                            Private Subnet                            #
 ########################################################################
 
-resource aws_subnet "private" {
+resource "aws_subnet" "private" {
   for_each = local.vpc_private_subnets
 
   vpc_id                  = local.vpc_id
@@ -136,7 +136,7 @@ resource aws_subnet "private" {
   })
 }
 
-resource aws_route_table "private" {
+resource "aws_route_table" "private" {
   vpc_id = local.vpc_id
 
   tags = merge(local.tags, {
@@ -144,7 +144,7 @@ resource aws_route_table "private" {
   })
 }
 
-resource aws_route_table_association "private" {
+resource "aws_route_table_association" "private" {
   for_each = aws_subnet.private
 
   subnet_id      = each.value.id
@@ -155,7 +155,7 @@ resource aws_route_table_association "private" {
 #                              NAT Gataway                             #
 ########################################################################
 
-resource aws_eip "nat" {
+resource "aws_eip" "nat" {
   count = var.nat_enabled ? 1 : 0
 
   vpc = true
@@ -165,7 +165,7 @@ resource aws_eip "nat" {
   })
 }
 
-resource aws_nat_gateway "private" {
+resource "aws_nat_gateway" "private" {
   count = var.nat_enabled ? 1 : 0
 
   allocation_id = element(aws_eip.nat, 0).id
@@ -176,7 +176,7 @@ resource aws_nat_gateway "private" {
   })
 }
 
-resource aws_route "private" {
+resource "aws_route" "private" {
   count = var.nat_enabled ? 1 : 0
 
   route_table_id         = aws_route_table.private.id
