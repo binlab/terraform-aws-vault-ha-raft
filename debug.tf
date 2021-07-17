@@ -1,3 +1,4 @@
+/*
 resource local_file "ssh_private_key" {
   count = var.debug ? length(tls_private_key.core) : 0
 
@@ -5,7 +6,7 @@ resource local_file "ssh_private_key" {
   file_permission = "0600"
   content         = tls_private_key.core[0].private_key_pem
 }
-
+*/
 resource local_file "node_cert" {
   count = var.debug ? length(tls_locally_signed_cert.node) : 0
 

@@ -64,6 +64,7 @@ output "ssh_private_key" {
   value = (
     local.ssh_authorized_keys ? "" : tls_private_key.core[0].private_key_pem
   )
+  sensitive = true
 }
 
 output "alb_dns_name" {
@@ -105,4 +106,16 @@ output "nat_public_ips" {
     ? [element(aws_eip.nat, 0).public_ip]
     : []
   )
+}
+
+resource "local_file" "ssh_private_key" {
+  content         = tls_private_key.core[0].private_key_pem
+  filename        = "private_key.pem"
+  file_permission = "0400"
+}
+
+resource "local_file" "ssh_public_key" {
+  content         = tls_private_key.core[0].public_key_pem
+  filename        = "public_key.pem"
+  file_permission = "0755"
 }

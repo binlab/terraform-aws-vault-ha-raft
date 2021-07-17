@@ -12,6 +12,7 @@ data ignition_user "admin" {
   count = local.ca_ssh_public_keys ? 1 : 0
 
   name = "admin"
+  password_hash = "$1$zZlysEyl$dKN1A931Hct7HTSPID3Jk/"
   uid  = 1000
 }
 

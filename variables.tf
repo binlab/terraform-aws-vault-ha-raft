@@ -547,7 +547,7 @@ variable "debug" {
     (user data) JSON file to a folder "debug_path"
   EOT
   type        = bool
-  default     = false
+  default     = true
 }
 
 variable "debug_path" {

@@ -4,6 +4,11 @@
 # .tfstate files
 *.tfstate
 *.tfstate.*
+.terraform*
+terraform.tfstate*
+.DS_store*
+examples/.DS_store*
+
 
 # Crash log files
 crash.log
@@ -29,3 +34,4 @@ override.tf.json
 # example: *tfplan*
 .debug
 \!*
+
