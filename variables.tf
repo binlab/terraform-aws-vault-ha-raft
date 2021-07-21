@@ -569,7 +569,7 @@ variable "debug_path" {
   default     = ""
 }
 
-variable "create_route53_ext" {
+variable "create_route53_external" {
   description = <<-EOT
     Creating external route53 record [true/false]
   EOT
@@ -577,7 +577,7 @@ variable "create_route53_ext" {
   default     = false
 }
 
-variable "route53_zone_id" {
+variable "route53_zone_id_external" {
   description = <<-EOT
     External route53 zone id
   EOT
