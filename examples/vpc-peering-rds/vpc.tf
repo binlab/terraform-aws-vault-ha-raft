@@ -1,6 +1,6 @@
 # Create separate VPC network
 
-resource aws_vpc "rds" {
+resource "aws_vpc" "rds" {
   cidr_block           = "10.0.0.0/16"
   instance_tenancy     = "default"
   enable_dns_support   = true
@@ -13,7 +13,7 @@ resource aws_vpc "rds" {
 
 # Create subnets in VPC with a count equal to availability zones 
 
-resource aws_subnet "rds" {
+resource "aws_subnet" "rds" {
   count = length(data.aws_availability_zones.rds.names)
 
   vpc_id                  = aws_vpc.rds.id
@@ -28,7 +28,7 @@ resource aws_subnet "rds" {
 
 # Create and assign Route Table to RDS VPC
 
-resource aws_route_table "rds" {
+resource "aws_route_table" "rds" {
   vpc_id = aws_vpc.rds.id
 
   route {
@@ -41,7 +41,7 @@ resource aws_route_table "rds" {
   }
 }
 
-resource aws_route_table_association "rds" {
+resource "aws_route_table_association" "rds" {
   count = length(aws_subnet.rds)
 
   subnet_id      = aws_subnet.rds[count.index].id
@@ -50,7 +50,7 @@ resource aws_route_table_association "rds" {
 
 # Create a Route in existing Route Table of Vault Cluster
 
-resource aws_route "rds" {
+resource "aws_route" "rds" {
   route_table_id            = module.vault.route_table
   destination_cidr_block    = "10.0.0.0/16"
   vpc_peering_connection_id = aws_vpc_peering_connection.vault_rds.id
@@ -58,7 +58,7 @@ resource aws_route "rds" {
 
 # Configuring VPC peering connections between different VPCs
 
-resource aws_vpc_peering_connection "vault_rds" {
+resource "aws_vpc_peering_connection" "vault_rds" {
   vpc_id      = module.vault.vpc_id
   peer_vpc_id = aws_vpc.rds.id
   auto_accept = true

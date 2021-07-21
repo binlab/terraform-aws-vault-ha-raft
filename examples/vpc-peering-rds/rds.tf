@@ -1,6 +1,6 @@
 # Create a Database RDS Subnet Group and assign to it all subnets
 
-resource aws_db_subnet_group "rds" {
+resource "aws_db_subnet_group" "rds" {
   name       = "rds"
   subnet_ids = aws_subnet.rds[*].id
 
@@ -11,7 +11,7 @@ resource aws_db_subnet_group "rds" {
 
 # Create a separate Security Group for RDS instance
 
-resource aws_security_group "rds" {
+resource "aws_security_group" "rds" {
   name   = "rds"
   vpc_id = aws_vpc.rds.id
 
@@ -30,7 +30,7 @@ resource aws_security_group "rds" {
 
 # Create a Database RDS classic instance
 
-resource aws_db_instance "rds" {
+resource "aws_db_instance" "rds" {
   allocated_storage    = 20
   storage_type         = "gp2"
   engine               = "mysql"

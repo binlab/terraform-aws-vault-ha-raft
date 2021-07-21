@@ -1,4 +1,4 @@
-resource aws_security_group "vpc" {
+resource "aws_security_group" "vpc" {
   name        = format(local.name_tmpl, "vpc")
   description = "Internal VPC Traffic"
   vpc_id      = local.vpc_id
@@ -9,7 +9,7 @@ resource aws_security_group "vpc" {
   })
 }
 
-resource aws_security_group "alb" {
+resource "aws_security_group" "alb" {
   name        = format(local.name_tmpl, "alb")
   description = "Allow Public Inbound Traffic to ALB"
   vpc_id      = local.vpc_id
@@ -45,7 +45,7 @@ resource aws_security_group "alb" {
   })
 }
 
-resource aws_security_group "node" {
+resource "aws_security_group" "node" {
   name        = format(local.name_tmpl, "node")
   description = "Allow ALB Inbound Traffic"
   vpc_id      = local.vpc_id
@@ -91,7 +91,7 @@ resource aws_security_group "node" {
   })
 }
 
-resource aws_security_group "public" {
+resource "aws_security_group" "public" {
   count = var.node_allow_public ? 1 : 0
 
   name        = format(local.name_tmpl, "public")
