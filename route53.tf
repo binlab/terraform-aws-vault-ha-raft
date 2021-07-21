@@ -27,8 +27,8 @@ resource "aws_route53_record" "int" {
 }
 
 resource "aws_route53_record" "ext" {
-  count   = var.create_route53_ext ? 1 : 0
-  zone_id = var.route53_zone_id
+  count   = var.create_route53_external ? 1 : 0
+  zone_id = var.route53_zone_id_external
   name    = "vault"
   type    = "CNAME"
   ttl     = 300
