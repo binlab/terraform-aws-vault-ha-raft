@@ -568,3 +568,19 @@ variable "debug_path" {
   type        = string
   default     = ""
 }
+
+variable "create_route53_external" {
+  description = <<-EOT
+    Creating external route53 record [true/false]
+  EOT
+  type        = bool
+  default     = false
+}
+
+variable "route53_zone_id_external" {
+  description = <<-EOT
+    External route53 zone id
+  EOT
+  type        = string
+  default     = ""
+}
