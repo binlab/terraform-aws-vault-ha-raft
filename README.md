@@ -232,6 +232,7 @@ No modules.
 | [aws_nat_gateway.private](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/nat_gateway) | resource |
 | [aws_route.private](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route) | resource |
 | [aws_route.public](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route) | resource |
+| [aws_route53_record.ext](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_record) | resource |
 | [aws_route53_record.int](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_record) | resource |
 | [aws_route53_zone.int](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_zone) | resource |
 | [aws_route_table.private](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route_table) | resource |
@@ -304,6 +305,7 @@ No modules.
 | <a name="input_cluster_name"></a> [cluster\_name](#input\_cluster\_name) | Name of a cluster, and tag "Name", can be a project name.<br>Format of "Name" tag "<cluster\_prefix>-<cluster\_name>-<resource>" | `string` | `"vault-ha"` | no |
 | <a name="input_cluster_port"></a> [cluster\_port](#input\_cluster\_port) | External port on ALB endpoint to a public connection | `number` | `443` | no |
 | <a name="input_cluster_prefix"></a> [cluster\_prefix](#input\_cluster\_prefix) | Prefix of a tag "Name", can be a namespace.<br>Format of "Name" tag "<cluster\_prefix>-<cluster\_name>-<resource>" | `string` | `"tf-"` | no |
+| <a name="input_create_route53_external"></a> [create\_route53\_external](#input\_create\_route53\_external) | Creating external route53 record [true/false] | `bool` | `false` | no |
 | <a name="input_data_volume_size"></a> [data\_volume\_size](#input\_data\_volume\_size) | Data (Raft) volume block device Size (GB) e.g. [8] | `number` | `8` | no |
 | <a name="input_data_volume_type"></a> [data\_volume\_type](#input\_data\_volume\_type) | Data (Raft) volume block device Type e.g. [gp2] | `string` | `"gp2"` | no |
 | <a name="input_debug"></a> [debug](#input\_debug) | Option for enabling debug output to plain files. When "true" <br>Terraform will store certificates, keys, ignitions files <br>(user data) JSON file to a folder "debug\_path" | `bool` | `false` | no |
@@ -325,8 +327,9 @@ No modules.
 | <a name="input_node_volume_size"></a> [node\_volume\_size](#input\_node\_volume\_size) | Node (Root) volume block device Size (GB) e.g. [8] | `number` | `8` | no |
 | <a name="input_node_volume_type"></a> [node\_volume\_type](#input\_node\_volume\_type) | Node (Root) volume block Device Type e.g. [gp2] | `string` | `"gp2"` | no |
 | <a name="input_peer_port"></a> [peer\_port](#input\_peer\_port) | Vault listens for server-to-server cluster requests | `number` | `8201` | no |
-| <a name="input_seal_awskms"></a> [seal\_awskms](#input\_seal\_awskms) | Map for an assignment for Vault to use AWS KMS as the seal <br>wrapping mechanism. If set will disable "seal\_transit". <br>More: https://www.vaultproject.io/docs/configuration/seal/awskms | `map` | `{}` | no |
-| <a name="input_seal_transit"></a> [seal\_transit](#input\_seal\_transit) | Map for assignment Transit seal configuration for use Vault's <br>Transit Secret Engine as the autoseal mechanism. <br>More: https://www.vaultproject.io/docs/configuration/seal/transit | `map` | `{}` | no |
+| <a name="input_route53_zone_id_external"></a> [route53\_zone\_id\_external](#input\_route53\_zone\_id\_external) | External route53 zone id | `string` | `""` | no |
+| <a name="input_seal_awskms"></a> [seal\_awskms](#input\_seal\_awskms) | Map for an assignment for Vault to use AWS KMS as the seal <br>wrapping mechanism. If set will disable "seal\_transit". <br>More: https://www.vaultproject.io/docs/configuration/seal/awskms | `map(any)` | `{}` | no |
+| <a name="input_seal_transit"></a> [seal\_transit](#input\_seal\_transit) | Map for assignment Transit seal configuration for use Vault's <br>Transit Secret Engine as the autoseal mechanism. <br>More: https://www.vaultproject.io/docs/configuration/seal/transit | `map(any)` | `{}` | no |
 | <a name="input_ssh_admin_principals"></a> [ssh\_admin\_principals](#input\_ssh\_admin\_principals) | List of SSH authorized principals for user "Core" when SSH login <br>configured via Certificate Authority ("ca\_ssh\_public\_key" is set)<br>https://man.openbsd.org/sshd_config#AuthorizedPrincipalsFile | `list(string)` | <pre>[<br>  "vault-ha"<br>]</pre> | no |
 | <a name="input_ssh_allowed_subnets"></a> [ssh\_allowed\_subnets](#input\_ssh\_allowed\_subnets) | If variable "node\_allow\_public" is set to "true" - list of these <br>IPs will be allowed to connect to Vault node by SSH directly (to <br>instances) | `list(string)` | <pre>[<br>  "0.0.0.0/32"<br>]</pre> | no |
 | <a name="input_ssh_authorized_keys"></a> [ssh\_authorized\_keys](#input\_ssh\_authorized\_keys) | List of SSH authorized keys assigned to "Core" user (sudo user) | `list(string)` | `[]` | no |
