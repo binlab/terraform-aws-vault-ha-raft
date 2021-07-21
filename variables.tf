@@ -427,7 +427,7 @@ variable "seal_awskms" {
     wrapping mechanism. If set will disable "seal_transit". 
     More: https://www.vaultproject.io/docs/configuration/seal/awskms
   EOT
-  type        = map
+  type        = map(any)
   default     = {}
 }
 
@@ -437,7 +437,7 @@ variable "seal_transit" {
     Transit Secret Engine as the autoseal mechanism. 
     More: https://www.vaultproject.io/docs/configuration/seal/transit
   EOT
-  type        = map
+  type        = map(any)
   default     = {}
 }
 

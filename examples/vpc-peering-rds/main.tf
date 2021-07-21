@@ -2,7 +2,7 @@ provider "aws" {
   region = var.aws_region
 }
 
-data aws_availability_zones "rds" {
+data "aws_availability_zones" "rds" {
   state = "available"
 }
 

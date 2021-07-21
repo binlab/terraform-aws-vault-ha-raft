@@ -1,4 +1,4 @@
-data aws_iam_policy_document "snapshots_sts" {
+data "aws_iam_policy_document" "snapshots_sts" {
   count = var.aws_snapshots ? 1 : 0
 
   statement {
@@ -13,7 +13,7 @@ data aws_iam_policy_document "snapshots_sts" {
   }
 }
 
-data aws_iam_policy_document "snapshots" {
+data "aws_iam_policy_document" "snapshots" {
   count = var.aws_snapshots ? 1 : 0
 
   statement {
@@ -38,14 +38,14 @@ data aws_iam_policy_document "snapshots" {
   }
 }
 
-resource aws_iam_role "snapshots" {
+resource "aws_iam_role" "snapshots" {
   count = var.aws_snapshots ? 1 : 0
 
   name               = format(local.name_tmpl, "dlm-snapshots")
   assume_role_policy = data.aws_iam_policy_document.snapshots_sts[0].json
 }
 
-resource aws_iam_role_policy "snapshots" {
+resource "aws_iam_role_policy" "snapshots" {
   count = var.aws_snapshots ? 1 : 0
 
   name   = format(local.name_tmpl, "dlm-snapshots")
@@ -53,7 +53,7 @@ resource aws_iam_role_policy "snapshots" {
   policy = data.aws_iam_policy_document.snapshots[0].json
 }
 
-resource aws_dlm_lifecycle_policy "snapshots" {
+resource "aws_dlm_lifecycle_policy" "snapshots" {
   count = var.aws_snapshots ? 1 : 0
 
   description        = format(local.name_tmpl, "snapshots")
