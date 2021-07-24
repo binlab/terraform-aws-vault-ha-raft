@@ -484,7 +484,7 @@ variable "docker_tag" {
     Vault Docker image version tag
   EOT
   type        = string
-  default     = "1.4.2"
+  default     = "1.7.3"
 }
 
 variable "disable_mlock" {
