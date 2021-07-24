@@ -106,3 +106,18 @@ output "nat_public_ips" {
     : []
   )
 }
+
+output "igw_public_ips" {
+  description = <<-EOT
+    List of Internet public IPs. If cluster nodes are determined to be 
+    in the public subnet (Internet Gateway used) all external network 
+    requests will be via public IPs assigned to the nodes. This list 
+    can be used for configuring security groups of related services or 
+    connect to the nodes via SSH on debugging
+  EOT
+  value = (
+    var.node_allow_public
+    ? [for value in aws_instance.node : value.public_ip]
+    : []
+  )
+}
