@@ -144,6 +144,7 @@ $ terraform destroy
 
 ## Examples
 
+  1. [Basic usage (Quick start)](examples/basic-usage-quick-start/)
   1. [Assigning CNAME and Route 53 Alias to Vault HA cluster](examples/route53-dns-records/)
   1. [Assigning module's VPC to external resources e.g. Bastion host](examples/vpc-assign-bastion/)
   1. [VPC Peering different networks e.g. RDS Database](examples/vpc-peering-rds/)
