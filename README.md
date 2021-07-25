@@ -145,6 +145,7 @@ $ terraform destroy
 ## Examples
 
   1. [Basic usage (Quick start)](examples/basic-usage-quick-start/)
+  1. [Public SSH access to the instances by OpenSSH private key](examples/ssh-access-private-key/)
   1. [Assigning CNAME and Route 53 Alias to Vault HA cluster](examples/route53-dns-records/)
   1. [Adding public certificate and domain by ACM and Route53](examples/acm-public-certificate/)
   1. [Assigning module's VPC to external resources e.g. Bastion host](examples/vpc-assign-bastion/)
