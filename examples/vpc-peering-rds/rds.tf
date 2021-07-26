@@ -2,7 +2,7 @@
 
 resource "aws_db_subnet_group" "rds" {
   name       = "rds"
-  subnet_ids = aws_subnet.rds[*].id
+  subnet_ids = [for value in aws_subnet.main : value.id]
 
   tags = {
     Name = "rds"
@@ -13,7 +13,7 @@ resource "aws_db_subnet_group" "rds" {
 
 resource "aws_security_group" "rds" {
   name   = "rds"
-  vpc_id = aws_vpc.rds.id
+  vpc_id = aws_vpc.main.id
 
   ingress {
     description = "Allow connections to RDS"
@@ -44,9 +44,10 @@ resource "aws_db_instance" "rds" {
   skip_final_snapshot  = true
   parameter_group_name = "default.mysql5.7"
   db_subnet_group_name = aws_db_subnet_group.rds.id
-  availability_zone    = data.aws_availability_zones.rds.names[0]
+  availability_zone    = data.aws_availability_zones.current.names[0]
+
   vpc_security_group_ids = [
-    aws_vpc.rds.default_security_group_id,
+    aws_vpc.main.default_security_group_id,
     aws_security_group.rds.id,
   ]
 }
