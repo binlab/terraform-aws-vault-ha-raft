@@ -6,7 +6,15 @@ variable "aws_region" {
   default     = "us-east-1"
 }
 
-variable "ssh_public_key" {
+variable "aws_profile" {
+  description = <<-EOT
+    AWS Profile
+  EOT
+  type        = string
+  default     = "default"
+}
+
+variable "ssh_public_key_path" {
   description = <<-EOT
     Path to SSH public key in a HOME directory
   EOT
