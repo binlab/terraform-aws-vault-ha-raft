@@ -65,5 +65,5 @@ No resources.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_cluster_url"></a> [cluster\_url](#output\_cluster\_url) | n/a |
+| <a name="output_cluster_url"></a> [cluster\_url](#output\_cluster\_url) | Cluster public URL with schema, domain, and port.<br>All parameters depend on inputs values and calculated automatically <br>for convenient use. Can be created separately outside a module |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
