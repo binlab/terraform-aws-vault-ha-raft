@@ -51,13 +51,13 @@ resource "local_file" "ssh_private_key" {
 
 # Obtain public OpenSSH key from filesystem the better way from a 
 # security perspective. In Terraform state file just will save a public 
-# key which not sensitive information. Important: file "~/.ssh/id_rsa.pub" 
-# should exist on filesystem before terraform apply
+# key which not sensitive information. Important: file should exist on 
+# filesystem before terraform apply
 
-data "local_file" "ssh_private_key" {
+data "local_file" "ssh_public_key" {
   count = var.ssh_key_source == "filesystem" ? 1 : 0
 
-  filename = pathexpand("~/.ssh/id_rsa.pub")
+  filename = pathexpand(var.ssh_public_key_path)
 }
 
 module "vault" {
@@ -77,7 +77,7 @@ module "vault" {
   ssh_authorized_keys = [(var.ssh_key_source == "external"
     ? tls_private_key.vault_ssh[0].public_key_openssh
     : var.ssh_key_source == "filesystem"
-    ? data.local_file.ssh_private_key[0].content
+    ? data.local_file.ssh_public_key[0].content
     : ""
   )]
 }

@@ -14,6 +14,14 @@ variable "aws_profile" {
   default     = "default"
 }
 
+variable "ssh_public_key_path" {
+  description = <<-EOT
+    Path to SSH public key in a HOME directory
+  EOT
+  type        = string
+  default     = "~/.ssh/id_rsa.pub"
+}
+
 variable "ssh_key_source" {
   description = <<-EOT
     Determine external SSH key will be used or internal

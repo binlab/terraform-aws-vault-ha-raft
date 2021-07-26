@@ -75,7 +75,7 @@ No requirements.
 | [local_file.ssh_private_key](https://registry.terraform.io/providers/hashicorp/local/latest/docs/resources/file) | resource |
 | [tls_private_key.vault_ssh](https://registry.terraform.io/providers/hashicorp/tls/latest/docs/resources/private_key) | resource |
 | [http_http.outside_ip](https://registry.terraform.io/providers/hashicorp/http/latest/docs/data-sources/http) | data source |
-| [local_file.ssh_private_key](https://registry.terraform.io/providers/hashicorp/local/latest/docs/data-sources/file) | data source |
+| [local_file.ssh_public_key](https://registry.terraform.io/providers/hashicorp/local/latest/docs/data-sources/file) | data source |
 
 ## Inputs
 
@@ -85,11 +85,12 @@ No requirements.
 | <a name="input_aws_region"></a> [aws\_region](#input\_aws\_region) | AWS Region name | `string` | `"us-east-1"` | no |
 | <a name="input_restrict_ssh_port"></a> [restrict\_ssh\_port](#input\_restrict\_ssh\_port) | Determine to restrict connection to SSH port by AWS security group <br>just for request host IP | `bool` | `true` | no |
 | <a name="input_ssh_key_source"></a> [ssh\_key\_source](#input\_ssh\_key\_source) | Determine external SSH key will be used or internal<br>internal \| external \| filesystem | `string` | `"external"` | no |
+| <a name="input_ssh_public_key_path"></a> [ssh\_public\_key\_path](#input\_ssh\_public\_key\_path) | Path to SSH public key in a HOME directory | `string` | `"~/.ssh/id_rsa.pub"` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| <a name="output_cluster_url"></a> [cluster\_url](#output\_cluster\_url) | n/a |
-| <a name="output_igw_public_ips"></a> [igw\_public\_ips](#output\_igw\_public\_ips) | n/a |
+| <a name="output_cluster_url"></a> [cluster\_url](#output\_cluster\_url) | Cluster public URL with schema, domain, and port.<br>All parameters depend on inputs values and calculated automatically <br>for convenient use. Can be created separately outside a module |
+| <a name="output_igw_public_ips"></a> [igw\_public\_ips](#output\_igw\_public\_ips) | List of Internet public IPs. If cluster nodes are determined to be <br>in the public subnet (Internet Gateway used) all external network <br>requests will be via public IPs assigned to the nodes. This list <br>can be used for configuring security groups of related services or <br>connect to the nodes via SSH on debugging |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
