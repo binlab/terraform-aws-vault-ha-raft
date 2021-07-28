@@ -25,3 +25,12 @@ resource "aws_route53_record" "int" {
     aws_instance.node[count.index].private_ip,
   ]
 }
+
+resource "aws_route53_record" "ext" {
+  count   = var.create_route53_external ? 1 : 0
+  zone_id = var.route53_zone_id_external
+  name    = "vault"
+  type    = "CNAME"
+  ttl     = 300
+  records = [aws_lb.cluster.dns_name]
+}
