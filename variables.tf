@@ -165,6 +165,14 @@ variable "vpc_id_external" {
   default     = null
 }
 
+variable "internet_gateway_id_external" {
+  description = <<-EOT
+    Provide existing external internet gateway ID for AWS VPC
+  EOT
+  type        = string
+  default     = null
+}
+
 variable "nat_enabled" {
   description = <<-EOT
     Determines to enable or disable creating NAT gateway and assigning 
