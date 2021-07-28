@@ -21,11 +21,7 @@ resource "aws_instance" "node" {
     : element([for value in aws_subnet.private : value.id], count.index)
   )
 
-  vpc_security_group_ids = compact([
-    aws_security_group.vpc.id,
-    aws_security_group.node.id,
-    var.node_allow_public ? aws_security_group.public[0].id : "",
-  ])
+  vpc_security_group_ids = [aws_security_group.node.id]
 
   tags = merge(local.tags, {
     Name    = format(local.name_tmpl, format("node%d", count.index))

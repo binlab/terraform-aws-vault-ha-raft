@@ -32,13 +32,13 @@ output "private_subnets" {
   value       = [for value in aws_subnet.private : value.id]
 }
 
-output "vpc_security_group" {
+output "node_security_group" {
   description = <<-EOT
-    VPC Security Group ID which allow connecting to "cluster_port", 
+    Node Security Group ID which allow connecting to "cluster_port", 
     "node_port" and "ssh_port". Useful for debugging when Bastion host 
     connected to the same VPC
   EOT
-  value       = aws_security_group.vpc.id
+  value       = aws_security_group.node.id
 }
 
 output "route_table" {
