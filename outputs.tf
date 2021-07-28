@@ -121,3 +121,11 @@ output "igw_public_ips" {
     : []
   )
 }
+
+output "node_security_group" {
+  description = <<-EOT
+    Node Security Group ID which allow connecting from vpc and alb 
+    security groups
+  EOT
+  value       = aws_security_group.node.id
+}
