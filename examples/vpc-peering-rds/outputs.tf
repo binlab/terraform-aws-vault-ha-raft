@@ -1,7 +1,22 @@
+output "cluster_url" {
+  description = <<-EOT
+    Cluster public URL with schema, domain, and port.
+    All parameters depend on inputs values and calculated automatically 
+    for convenient use. Can be created separately outside a module
+  EOT
+  value       = module.vault.cluster_url
+}
+
 output "bastion_host" {
-  value = module.bastion.public_ip
+  description = <<-EOT
+    Bastion public host (Public IP)
+  EOT
+  value       = module.bastion.public_ip
 }
 
 output "rds_endpoint" {
-  value = aws_db_instance.rds.endpoint
+  description = <<-EOT
+    RDS endpoint (hostname with a port in format host:port)
+  EOT
+  value       = aws_db_instance.rds.endpoint
 }

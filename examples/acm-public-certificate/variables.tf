@@ -21,3 +21,11 @@ variable "route53_zone" {
   type        = string
   default     = "example.io"
 }
+
+variable "domain_prefix" {
+  description = <<-EOT
+    Domain prefix for a Vault cluster
+  EOT
+  type        = string
+  default     = "vault"
+}

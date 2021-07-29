@@ -30,7 +30,7 @@ Vault HA cluster is based on [Raft Storage Backend](https://www.vaultproject.io/
 - No need additional provisioning tools like **Ansible**, **Chief** of **Puppet**, all based on clear **Terraform**
 - Module fully independent with zero-external resources dependencies and just optional like `ACM` for `HTTPS` etc
 - Provisioning based on **CoreOS ignitions** so very fast, declarative and predictable 
-- Fast and easily manual creating snapshots (*backups*) from [Vault UI](docs/raft-manual-shapshots.md) (thanks **Raft** [implementations](https://www.vaultproject.io/docs/commands/operator/raft))
+- Fast and easily manual creating snapshots (*backups*) from [Vault UI](docs/raft-manual-snapshots.md) (thanks **Raft** [implementations](https://www.vaultproject.io/docs/commands/operator/raft))
 - Integrated auto backups of data by **Amazon snapshots** and fully configurable scheduler (*false by default*)
 - Integrated optional [auto-unseal](https://www.vaultproject.io/docs/configuration/seal) with built-in **AWS KMS** provisioning, external [AWS KMS](https://www.vaultproject.io/docs/configuration/seal/awskms) or [Transit](https://www.vaultproject.io/docs/configuration/seal/transit) secret backend by another **Vault**
 - **Vault Raft data** is storing on separate **EBS** volumes independent from a root filesystem
@@ -103,12 +103,13 @@ provider "aws" {
   region = "us-east-1"
 }
 
-module "vault_ha" {
-  source = "github.com/binlab/terraform-aws-vault-ha-raft?ref=v0.1.0"
+module "vault" {
+  source = "github.com/binlab/terraform-aws-vault-ha-raft?ref=v0.1.8"
 
-  cluster_name        = "vault-ha"
-  node_instance_type  = "t3a.small"
-  autounseal          = true
+  cluster_name       = "vault-ha"
+  node_instance_type = "t3a.small"
+  autounseal         = true
+  nat_enabled        = true
 }
 
 output "cluster_url" {
@@ -131,7 +132,7 @@ cluster_url = http://tf-vault-ha-alb-123456789.us-east-1.elb.amazonaws.com:443
 $
 ```
 
-*Then just open URL in a browser and initialize the cluster*
+*Then just open URL in a browser and [initialize the cluster](docs/initializing-newly-created-cluster.md)*
 
 **ATTENTION! Some resources cannot be covered by Amazon Free Tier or not Free usage and cost a money so after running this example should destroy all resources created previously by next command:**
 
@@ -139,12 +140,29 @@ $
 $ terraform destroy
 ```
 
+## HOW TO
+
+  1. [Initializing newly created cluster](docs/initializing-newly-created-cluster.md)
+  1. [Raft manual snapshots (Init/Join/Backup/Restore)](docs/raft-manual-snapshots.md)
+  1. [AWS IAM Granular Permissions](docs/aws-iam-granular-permissions.md)
+
+
 ## Examples
 
+  1. [Basic usage (Quick start)](examples/basic-usage-quick-start/)
+  1. [Public SSH access to the instances by OpenSSH private key](examples/ssh-access-private-key/)
   1. [Assigning CNAME and Route 53 Alias to Vault HA cluster](examples/route53-dns-records/)
+  1. [Adding public certificate and domain by ACM and Route53](examples/acm-public-certificate/)
   1. [Assigning module's VPC to external resources e.g. Bastion host](examples/vpc-assign-bastion/)
   1. [VPC Peering different networks e.g. RDS Database](examples/vpc-peering-rds/)
   1. [Assigning Vault cluster to inside an already created (external) AWS VPC](examples/assign-external-vpc/)
+
+
+## Troubleshooting
+
+  See separate page [#troubleshooting](docs/troubleshooting.md)
+
+  In case you encounter trouble that is not described in documentation or you cannot solve by your self please free to [open an issue](https://github.com/binlab/terraform-aws-vault-ha-raft/issues/new)
 
 
 ## TODO
