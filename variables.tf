@@ -476,7 +476,7 @@ variable "docker_repo" {
     Vault Docker repository URI
   EOT
   type        = string
-  default     = "docker://vault"
+  default     = "vault"
 }
 
 variable "docker_tag" {
