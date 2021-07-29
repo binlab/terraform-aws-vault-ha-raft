@@ -157,6 +157,7 @@ $ terraform destroy
   1. [Assigning module's VPC to external resources e.g. Bastion host](examples/vpc-assign-bastion/)
   1. [VPC Peering different networks e.g. RDS Database](examples/vpc-peering-rds/)
   1. [Assigning Vault cluster to inside an already created (external) AWS VPC](examples/assign-external-vpc/)
+  1. [Development and Debugging Sandbox](examples/development-debugging-sandbox/)
 
 
 ## Troubleshooting
