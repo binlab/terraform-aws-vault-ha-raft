@@ -99,6 +99,8 @@ resource "aws_route_table_association" "public" {
 }
 
 resource "aws_internet_gateway" "public" {
+  count = var.internet_gateway_id_external != null ? 0 : 1
+
   vpc_id = local.vpc_id
 
   tags = merge(local.tags, {
@@ -108,7 +110,7 @@ resource "aws_internet_gateway" "public" {
 
 resource "aws_route" "public" {
   route_table_id         = aws_route_table.public.id
-  gateway_id             = aws_internet_gateway.public.id
+  gateway_id             = local.internet_gateway_id
   destination_cidr_block = "0.0.0.0/0"
 }
 
