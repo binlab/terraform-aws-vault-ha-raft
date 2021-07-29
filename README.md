@@ -145,6 +145,7 @@ $ terraform destroy
   1. [Initializing newly created cluster](docs/initializing-newly-created-cluster.md)
   1. [Raft manual snapshots (Init/Join/Backup/Restore)](docs/raft-manual-snapshots.md)
   1. [AWS IAM Granular Permissions](docs/aws-iam-granular-permissions.md)
+  1. [Change AMI on worked cluster](docs/change-ami-on-worked-cluster.md)
 
 
 ## Examples
@@ -311,7 +312,7 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_ami_channel"></a> [ami\_channel](#input\_ami\_channel) | AMI filter for OS channel [stable/edge/beta/etc] | `string` | `"stable"` | no |
-| <a name="input_ami_image"></a> [ami\_image](#input\_ami\_image) | Specific AMI image ID in current Avalability Zone e.g. [ami-123456]<br>If provided nodes will be run on it, for cases when image built by <br>Packer if set it will disable search images by "ami\_vendor" and <br>"ami\_channel". Note: Instance OS should support CoreOS Ignition <br>provisioning | `string` | `""` | no |
+| <a name="input_ami_image"></a> [ami\_image](#input\_ami\_image) | Specific AMI image ID in current Avalability Zone e.g. [ami-123456]<br>If provided nodes will be run on it, for cases when image built by <br>Packer if set it will disable search images by "ami\_vendor" and <br>"ami\_channel". Note: Instance OS should support CoreOS Ignition <br>provisioning. To change on worked cluster you need some trick, more<br>https://github.com/binlab/terraform-aws-vault-ha-raft/blob/master/docs/change-ami-on-worked-cluster.md | `string` | `""` | no |
 | <a name="input_ami_vendor"></a> [ami\_vendor](#input\_ami\_vendor) | AMI filter for OS vendor [coreos/flatcar] | `string` | `"flatcar"` | no |
 | <a name="input_autounseal"></a> [autounseal](#input\_autounseal) | Option to enable/disable creating KMS key, IAM role, policy and <br>AssumeRole for autounseal by AWS. Instead of creating by module, <br>can be used external resources for autounseal or without it at all. <br>If set will disable "seal\_transit" and "seal\_awskms". | `bool` | `false` | no |
 | <a name="input_aws_snapshots"></a> [aws\_snapshots](#input\_aws\_snapshots) | Option to enable/disable embedded snapshots by AWS | `bool` | `false` | no |
