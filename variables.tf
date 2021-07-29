@@ -275,7 +275,8 @@ variable "ami_image" {
     If provided nodes will be run on it, for cases when image built by 
     Packer if set it will disable search images by "ami_vendor" and 
     "ami_channel". Note: Instance OS should support CoreOS Ignition 
-    provisioning
+    provisioning. To change on worked cluster you need some trick, more
+    https://github.com/binlab/terraform-aws-vault-ha-raft/blob/master/docs/change-ami-on-worked-cluster.md
   EOT
   type        = string
   default     = ""
