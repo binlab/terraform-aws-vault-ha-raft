@@ -71,10 +71,14 @@ resource "tls_cert_request" "node" {
   private_key_pem = tls_private_key.node[count.index].private_key_pem
 
   subject {
-    common_name         = format(local.internal_domain_tmpl, count.index)
+    common_name         = format("%s Node %d", var.cluster_description, var.cluster_count)
     organizational_unit = format("%s Certificate", var.cluster_description)
     organization        = var.cluster_description
   }
+
+  dns_names = [
+    format(local.internal_domain_tmpl, count.index)
+  ]
 
   lifecycle {
     prevent_destroy = false
