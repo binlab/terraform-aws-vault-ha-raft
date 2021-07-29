@@ -61,6 +61,11 @@ Why not use a Kubernetes or other current cluster? For this, I can name a few re
 4. **Lightweight.** Sometimes we need a very lightweight and cheap Vault and at the same time very stable. E.g. just for auto-unseal another Vault.  
 
 
+## **IMPORTANT**
+
+- After Flatcar Container Linux [release 2905.2.0](https://kinvolk.io/flatcar-container-linux/releases/#release-2905.2.0) Vault cluster stop working due [rkt](https://www.openshift.com/learn/topics/rkt) deprecated, so all Vault module tags up to `v0.1.8` stopped work, more [#48](https://github.com/binlab/terraform-aws-vault-ha-raft/issues/48). Please update module to latest version and check all the latest changes to compatibility with your configuration.
+
+
 ## AWS Permissions
 
 For deploying you need a list of permissions. For beginners might be difficult to set up minimal need permissions, so here the list wildcard for main actions. For professional or those who interesting for high-level security and granular permissions looking this [AWS IAM Granular Permissions](docs/aws-iam-granular-permissions.md)
@@ -310,7 +315,7 @@ No modules.
 | <a name="input_debug"></a> [debug](#input\_debug) | Option for enabling debug output to plain files. When "true" <br>Terraform will store certificates, keys, ignitions files <br>(user data) JSON file to a folder "debug\_path" | `bool` | `false` | no |
 | <a name="input_debug_path"></a> [debug\_path](#input\_debug\_path) | Path to folder where will be stored debug files.<br>If is empty then default "${path.module}/.debug"<br>you can set custom full path e.g. "/home/user/.debug" | `string` | `""` | no |
 | <a name="input_disable_mlock"></a> [disable\_mlock](#input\_disable\_mlock) | Disables the server from executing the "mlock" syscall. Mlock <br>prevents memory from being swapped to disk. Disabling "mlock" is <br>not recommended in production, but is fine for local development <br>and testing | `bool` | `false` | no |
-| <a name="input_docker_repo"></a> [docker\_repo](#input\_docker\_repo) | Vault Docker repository URI | `string` | `"docker://vault"` | no |
+| <a name="input_docker_repo"></a> [docker\_repo](#input\_docker\_repo) | Vault Docker repository URI | `string` | `"vault"` | no |
 | <a name="input_docker_tag"></a> [docker\_tag](#input\_docker\_tag) | Vault Docker image version tag | `string` | `"1.7.3"` | no |
 | <a name="input_internal_zone"></a> [internal\_zone](#input\_internal\_zone) | Name for internal domain zone. Need for assigning domain names <br>to each of nodes for cluster server-to-server communication.<br>Also used for SSH connection over Bastion host. | `string` | `"vault.int"` | no |
 | <a name="input_nat_enabled"></a> [nat\_enabled](#input\_nat\_enabled) | Determines to enable or disable creating NAT gateway and assigning <br>it to VPC Private Subnet. If you intend to use Vault only with <br>internal resources and internal network, you can disable this option <br>otherwise, you need to enable it. Allowing external routing might be <br>a potential security vulnerability. Also, enabling these options <br>will be additional money costs and not covered by the AWS Free Tier <br>program.<br>IMPORTANT: since during the creation of the cluster, the instance <br>needs to get a docker image, then it is necessary to enable <br>`nat_enabled` at the first initialization | `bool` | `false` | no |

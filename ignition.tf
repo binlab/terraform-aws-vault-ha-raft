@@ -210,28 +210,23 @@ data "ignition_systemd_unit" "service" {
   content = <<-EOT
     [Unit]
     Description="Hashicorp Vault HA"
+    After=docker.service
+    Requires=docker.service
     [Service]
     ${var.cluster_count > 1 ? "ExecStartPre=/etc/vault/helper" : ""}
-    ExecStartPre=-/usr/bin/rkt rm --uuid-file="/var/cache/vault-service.uuid"
-    ExecStart=/usr/bin/rkt run \
-      --insecure-options=image \
-      --volume vault-data,kind=host,source=/vault,readOnly=false \
-      --mount volume=vault-data,target=/vault/file \
-      --volume vault-logs,kind=empty,readOnly=false \
-      --mount volume=vault-logs,target=/vault/logs \
-      --volume vault-config,kind=host,source=/etc/vault,readOnly=true \
-      --mount volume=vault-config,target=/vault/config \
+    ExecStartPre=-/usr/bin/docker stop %n
+    ExecStart=/usr/bin/docker run --rm \
+      --name=%n \
+      --network=host \
+      --mount=type=bind,source=/etc/vault,target=/vault/config,readonly \
+      --mount=type=bind,source=/vault,target=/vault/file \
+      --mount=type=tmpfs,destination=/vault/logs \
+      --user="0:0" \
+      --cap-add=CAP_IPC_LOCK \
       ${format("%s:%s", var.docker_repo, var.docker_tag)} \
-      --name=vault \
-      --user=0 \
-      --group=0 \
-      --caps-retain=CAP_IPC_LOCK \
-      --net=host \
-      --dns=host \
-      --exec=/bin/vault -- \
-        server \
-        -config=/vault/config/config.json
-    ExecStop=-/usr/bin/rkt stop --uuid-file="/var/cache/vault-service.uuid"
+      /bin/vault server -config=/vault/config/config.json
+    ExecStop=-/usr/bin/docker stop %n
+    TimeoutStartSec=0
     Restart=always
     RestartSec=5
     [Install]
