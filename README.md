@@ -333,7 +333,7 @@ No modules.
 | <a name="input_data_volume_size"></a> [data\_volume\_size](#input\_data\_volume\_size) | Data (Raft) volume block device Size (GB) e.g. [8] | `number` | `8` | no |
 | <a name="input_data_volume_type"></a> [data\_volume\_type](#input\_data\_volume\_type) | Data (Raft) volume block device Type e.g. [gp2] | `string` | `"gp2"` | no |
 | <a name="input_debug"></a> [debug](#input\_debug) | Option for enabling debug output to plain files. When "true" <br>Terraform will store certificates, keys, ignitions files <br>(user data) JSON file to a folder "debug\_path" | `bool` | `false` | no |
-| <a name="input_debug_path"></a> [debug\_path](#input\_debug\_path) | Path to folder where will be stored debug files.<br>If is empty then default "${path.module}/.debug"<br>you can set custom full path e.g. "/home/user/.debug" | `string` | `""` | no |
+| <a name="input_debug_path"></a> [debug\_path](#input\_debug\_path) | Path to folder where will be stored debug files.<br>If is empty then default "${path.root}/.debug"<br>you can set custom full path e.g. "/home/user/.debug" | `string` | `""` | no |
 | <a name="input_disable_mlock"></a> [disable\_mlock](#input\_disable\_mlock) | Disables the server from executing the "mlock" syscall. Mlock <br>prevents memory from being swapped to disk. Disabling "mlock" is <br>not recommended in production, but is fine for local development <br>and testing | `bool` | `false` | no |
 | <a name="input_docker_repo"></a> [docker\_repo](#input\_docker\_repo) | Vault Docker repository URI | `string` | `"vault"` | no |
 | <a name="input_docker_tag"></a> [docker\_tag](#input\_docker\_tag) | Vault Docker image version tag | `string` | `"1.7.3"` | no |

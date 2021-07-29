@@ -1,6 +1,6 @@
 locals {
   name_tmpl            = format("%s%s-%s", var.cluster_prefix, var.cluster_name, "%s")
-  debug_path           = var.debug_path != "" ? var.debug_path : "${path.module}/.debug"
+  debug_path           = var.debug_path != "" ? var.debug_path : "${path.root}/.debug"
   internal_domain_tmpl = format("%s.%s", var.node_name_tmpl, var.internal_zone)
   internal_url_tmpl    = "https://${local.internal_domain_tmpl}:%d"
   ca_ssh_public_keys   = length(var.ca_ssh_public_keys) == 0 ? false : true
