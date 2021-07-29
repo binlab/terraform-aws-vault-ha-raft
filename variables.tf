@@ -554,7 +554,7 @@ variable "debug" {
 variable "debug_path" {
   description = <<-EOT
     Path to folder where will be stored debug files.
-    If is empty then default "$${path.module}/.debug"
+    If is empty then default "$${path.root}/.debug"
     you can set custom full path e.g. "/home/user/.debug"
   EOT
   type        = string

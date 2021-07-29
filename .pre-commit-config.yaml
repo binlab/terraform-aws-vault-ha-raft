@@ -7,3 +7,4 @@ repos:
     - id: terraform_tflint
       args:
       - '--args=--disable-rule=aws_db_instance_default_parameter_group'
+      - '--args=--disable-rule=terraform_module_pinned_source'
