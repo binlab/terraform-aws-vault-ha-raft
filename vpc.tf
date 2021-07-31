@@ -106,6 +106,10 @@ resource "aws_internet_gateway" "public" {
   tags = merge(local.tags, {
     Name = format(local.name_tmpl, "public")
   })
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "aws_route" "public" {
