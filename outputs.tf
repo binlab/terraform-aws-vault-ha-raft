@@ -66,6 +66,16 @@ output "ssh_private_key" {
   )
 }
 
+output "kms_key_arn" {
+  description = <<-EOT
+    ARN of AWS KMS Key. It can return ARN of internal created KMS key or 
+    just forward ARN of an external key if it is provided by "kms_key_arn" 
+    variable. It will return "null" if "autounseal=false" or "kms_key_arn" 
+    not defined.
+  EOT
+  value       = local.kms_key_arn
+}
+
 output "alb_dns_name" {
   description = <<-EOT
     ALB external endpoint DNS name. Should use to assign 
