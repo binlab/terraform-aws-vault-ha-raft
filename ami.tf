@@ -26,7 +26,7 @@ data "aws_ami" "flatcar" {
   count = var.ami_image == "" && var.ami_vendor == "flatcar" ? 1 : 0
 
   most_recent = true
-  owners      = ["075585003325"]
+  owners      = ["679593333241"]
 
   filter {
     name   = "architecture"
