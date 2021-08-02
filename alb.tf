@@ -2,10 +2,7 @@ resource "aws_lb" "cluster" {
   name               = format(local.name_tmpl, "alb")
   internal           = false
   load_balancer_type = "application"
-  security_groups = [
-    aws_security_group.vpc.id,
-    aws_security_group.alb.id
-  ]
+  security_groups    = [aws_security_group.alb.id]
 
   dynamic "subnet_mapping" {
     for_each = [for value in aws_subnet.public : value.id]

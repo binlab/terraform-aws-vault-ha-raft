@@ -13,11 +13,13 @@ module "bastion" {
   stack                 = "vault-debug"
   vpc_id                = module.vault.vpc_id
   vpc_subnet_id         = module.vault.public_subnets[0]
-  security_groups       = [module.vault.vpc_security_group]
+  security_groups       = [module.vault.node_security_group]
   ec2_ssh_cidr          = ["0.0.0.0/0"]
   bastion_ssh_cidr      = ["0.0.0.0/0"]
   ec2_ssh_auth_keys     = [data.local_file.ssh_public_key.content]
   bastion_ssh_auth_keys = [data.local_file.ssh_public_key.content]
+
+  ami_image = "ami-0ad034613130b6344"
 }
 
 
@@ -48,5 +50,5 @@ module "vault" {
   debug_path = format("%s/.debug", path.module)
   docker_tag = "1.8.0"
 
-  # ami_image  = "ami-0bb5fc1412bbbb988"
+  # ami_image = "ami-0ad034613130b6344"
 }
