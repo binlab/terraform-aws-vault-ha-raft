@@ -65,6 +65,7 @@ Why not use a Kubernetes or other current cluster? For this, I can name a few re
 
 - After Flatcar Container Linux [release 2905.2.0](https://kinvolk.io/flatcar-container-linux/releases/#release-2905.2.0) Vault cluster stop working due [rkt](https://www.openshift.com/learn/topics/rkt) deprecated, so all Vault module tags up to `v0.1.8` stopped work, more [#48](https://github.com/binlab/terraform-aws-vault-ha-raft/issues/48). Please update module to latest version and check all the latest changes to compatibility with your configuration.
 - From **August 1, 2021** `Flatcar Container Linux (Stable)` by owner `075585003325` was removed from AMI public images and replaced by **AMI Marketplace** from owner `679593333241`. This means all previous tags and Terraform code stopped work and need to update module or configure **AMI** manualy by [ami_image](https://github.com/binlab/terraform-aws-vault-ha-raft#input_ami_image). More about issue [#60](https://github.com/binlab/terraform-aws-vault-ha-raft/issues/60), [#61](https://github.com/binlab/terraform-aws-vault-ha-raft/pull/61)
+- For updating **Vault** module to version `0.2.x` need some manual work, as there are some breaking changes, read more [#61](https://github.com/binlab/terraform-aws-vault-ha-raft/pull/61), [#63](https://github.com/binlab/terraform-aws-vault-ha-raft/pull/63)
 
 
 ## AWS Permissions
