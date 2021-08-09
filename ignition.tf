@@ -142,7 +142,7 @@ data "ignition_file" "config" {
       (
         var.autounseal ? local.autounseal : (
           length(var.seal_awskms) != 0 ? local.seal_awskms : (
-            length(var.seal_transit) != 0 ? local.seal_transit : {}
+            length(var.seal_transit) != 0 ? local.seal_transit : map({})
           )
         )
       )

@@ -10,6 +10,8 @@ locals {
   vpc_id              = var.vpc_id_external != null ? var.vpc_id_external : aws_vpc.this[0].id
   internet_gateway_id = var.internet_gateway_id_external != null ? var.internet_gateway_id_external : aws_internet_gateway.public[0].id
 
+  kms_key_arn = var.autounseal ? (var.kms_key_create ? aws_kms_key.autounseal[0].arn : var.kms_key_arn) : null
+
   tags = merge({
     Description = var.cluster_description
     ManagedBy   = "Terraform"
@@ -41,7 +43,7 @@ locals {
   autounseal = {
     seal = {
       awskms = {
-        kms_key_id = var.autounseal ? aws_kms_key.autounseal[0].id : ""
+        kms_key_id = local.kms_key_arn
       }
     }
   }

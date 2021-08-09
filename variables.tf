@@ -424,10 +424,31 @@ variable "autounseal" {
     Option to enable/disable creating KMS key, IAM role, policy and 
     AssumeRole for autounseal by AWS. Instead of creating by module, 
     can be used external resources for autounseal or without it at all. 
-    If set will disable "seal_transit" and "seal_awskms".
+    If set will disable "seal_transit" and "seal_awskms". By variable 
+    "kms_key_arn" can be configured external KMS Key instead of internal.
   EOT
   type        = bool
   default     = false
+}
+
+variable "kms_key_create" {
+  description = <<-EOT
+    Determines is create or not create AWS KMS Key inside a module. If 
+    the value is set "false", it will turn off the creation of internal 
+    "aws_kms_key" resource.
+  EOT
+  type        = bool
+  default     = true
+}
+
+variable "kms_key_arn" {
+  description = <<-EOT
+    ARN of an external AWS KMS Key. Is used for replacing internal 
+    "aws_kms_key". Useful for cluster migration or more stable 
+    configuration with independent KMS key outside of the module. 
+  EOT
+  type        = string
+  default     = null
 }
 
 variable "seal_awskms" {
