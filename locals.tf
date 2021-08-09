@@ -24,8 +24,11 @@ locals {
 
   cluster_url = format("%s://%s:%d",
     var.certificate_arn != "" ? "https" : "http",
-    var.cluster_domain != "" ? var.cluster_domain : aws_lb.cluster.dns_name,
-    var.cluster_port
+    (var.cluster_domain != "" ? var.cluster_domain : var.route53_zone_id != ""
+      ? format("%s.%s", var.route53_record_name,
+        trimsuffix(data.aws_route53_zone.external[0].name, "."),
+      ) : aws_lb.cluster.dns_name
+    ), var.cluster_port
   )
 
   seal_transit = {

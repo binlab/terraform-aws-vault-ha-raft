@@ -262,6 +262,8 @@ No modules.
 | [aws_nat_gateway.private](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/nat_gateway) | resource |
 | [aws_route.private](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route) | resource |
 | [aws_route.public](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route) | resource |
+| [aws_route53_record.alias](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_record) | resource |
+| [aws_route53_record.cname](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_record) | resource |
 | [aws_route53_record.int](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_record) | resource |
 | [aws_route53_zone.int](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_zone) | resource |
 | [aws_route_table.private](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route_table) | resource |
@@ -302,6 +304,7 @@ No modules.
 | [aws_iam_policy_document.autounseal_sts](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
 | [aws_iam_policy_document.snapshots](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
 | [aws_iam_policy_document.snapshots_sts](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
+| [aws_route53_zone.external](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/route53_zone) | data source |
 | [ignition_config.node](https://registry.terraform.io/providers/community-terraform-providers/ignition/latest/docs/data-sources/config) | data source |
 | [ignition_file.auth_principals_admin](https://registry.terraform.io/providers/community-terraform-providers/ignition/latest/docs/data-sources/file) | data source |
 | [ignition_file.auth_principals_core](https://registry.terraform.io/providers/community-terraform-providers/ignition/latest/docs/data-sources/file) | data source |
@@ -364,6 +367,11 @@ No modules.
 | <a name="input_node_volume_size"></a> [node\_volume\_size](#input\_node\_volume\_size) | Node (Root) volume block device Size (GB) e.g. [8] | `number` | `8` | no |
 | <a name="input_node_volume_type"></a> [node\_volume\_type](#input\_node\_volume\_type) | Node (Root) volume block Device Type e.g. [gp2] | `string` | `"gp2"` | no |
 | <a name="input_peer_port"></a> [peer\_port](#input\_peer\_port) | Vault listens for server-to-server cluster requests | `number` | `8201` | no |
+| <a name="input_route53_record_create"></a> [route53\_record\_create](#input\_route53\_record\_create) | Determine a create Route53 record for cluster or not. If set true, <br>"route53\_zone\_id" also must be defined | `bool` | `false` | no |
+| <a name="input_route53_record_name"></a> [route53\_record\_name](#input\_route53\_record\_name) | Name for subdomain Route53 record in a zone which determined in <br>"route53\_zone\_id" | `string` | `"vault"` | no |
+| <a name="input_route53_record_ttl"></a> [route53\_record\_ttl](#input\_route53\_record\_ttl) | TTL for subdomain Route53 record in a zone which determined in <br>"route53\_zone\_id". Applies only if "route53\_record\_type" = "cname" | `number` | `300` | no |
+| <a name="input_route53_record_type"></a> [route53\_record\_type](#input\_route53\_record\_type) | Type for subdomain Route53 record in a zone which determined in <br>"route53\_zone\_id". Can be "cname" or "alias", by default is - "cname" | `string` | `"cname"` | no |
+| <a name="input_route53_zone_id"></a> [route53\_zone\_id](#input\_route53\_zone\_id) | External Route53 Zone ID for creating record inside a module, for <br>enabling need to set "route53\_record\_create" = true | `string` | `""` | no |
 | <a name="input_seal_awskms"></a> [seal\_awskms](#input\_seal\_awskms) | Map for an assignment for Vault to use AWS KMS as the seal <br>wrapping mechanism. If set will disable "seal\_transit". <br>More: https://www.vaultproject.io/docs/configuration/seal/awskms | `map(any)` | `{}` | no |
 | <a name="input_seal_transit"></a> [seal\_transit](#input\_seal\_transit) | Map for assignment Transit seal configuration for use Vault's <br>Transit Secret Engine as the autoseal mechanism. <br>More: https://www.vaultproject.io/docs/configuration/seal/transit | `map(any)` | `{}` | no |
 | <a name="input_ssh_admin_principals"></a> [ssh\_admin\_principals](#input\_ssh\_admin\_principals) | List of SSH authorized principals for user "Core" when SSH login <br>configured via Certificate Authority ("ca\_ssh\_public\_key" is set)<br>https://man.openbsd.org/sshd_config#AuthorizedPrincipalsFile | `list(string)` | <pre>[<br>  "vault-ha"<br>]</pre> | no |
