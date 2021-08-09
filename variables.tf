@@ -491,6 +491,51 @@ variable "internal_zone" {
   default     = "vault.int"
 }
 
+variable "route53_zone_id" {
+  description = <<-EOT
+    External Route53 Zone ID for creating record inside a module, for 
+    enabling need to set "route53_record_create" = true
+  EOT
+  type        = string
+  default     = ""
+}
+
+variable "route53_record_create" {
+  description = <<-EOT
+    Determine a create Route53 record for cluster or not. If set true, 
+    "route53_zone_id" also must be defined
+  EOT
+  type        = bool
+  default     = false
+}
+
+variable "route53_record_name" {
+  description = <<-EOT
+    Name for subdomain Route53 record in a zone which determined in 
+    "route53_zone_id"
+  EOT
+  type        = string
+  default     = "vault"
+}
+
+variable "route53_record_type" {
+  description = <<-EOT
+    Type for subdomain Route53 record in a zone which determined in 
+    "route53_zone_id". Can be "cname" or "alias", by default is - "cname"
+  EOT
+  type        = string
+  default     = "cname"
+}
+
+variable "route53_record_ttl" {
+  description = <<-EOT
+    TTL for subdomain Route53 record in a zone which determined in 
+    "route53_zone_id". Applies only if "route53_record_type" = "cname"
+  EOT
+  type        = number
+  default     = 300
+}
+
 variable "node_name_tmpl" {
   description = <<-EOT
     Template of Vault node ID for a Raft cluster. Also used as a 

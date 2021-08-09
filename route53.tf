@@ -25,3 +25,40 @@ resource "aws_route53_record" "int" {
     aws_instance.node[count.index].private_ip,
   ]
 }
+
+resource "aws_route53_record" "cname" {
+  count = (var.route53_record_create
+    && var.route53_record_type == "cname" ? 1 : 0
+  )
+
+  zone_id = var.route53_zone_id
+  name    = var.route53_record_name
+  type    = "CNAME"
+  ttl     = var.route53_record_ttl
+
+  records = [
+    aws_lb.cluster.dns_name
+  ]
+}
+
+resource "aws_route53_record" "alias" {
+  count = (var.route53_record_create
+    && var.route53_record_type == "alias" ? 1 : 0
+  )
+
+  zone_id = var.route53_zone_id
+  name    = var.route53_record_name
+  type    = "A"
+
+  alias {
+    name                   = aws_lb.cluster.dns_name
+    zone_id                = aws_lb.cluster.zone_id
+    evaluate_target_health = true
+  }
+}
+
+data "aws_route53_zone" "external" {
+  count = var.route53_zone_id != "" ? 1 : 0
+
+  zone_id = var.route53_zone_id
+}
