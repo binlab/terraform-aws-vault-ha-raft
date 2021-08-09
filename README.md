@@ -222,7 +222,7 @@ $ terraform destroy
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.12 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 2.53.0 |
-| <a name="requirement_ignition"></a> [ignition](#requirement\_ignition) | >= 1.2.1 |
+| <a name="requirement_ignition"></a> [ignition](#requirement\_ignition) | <= 1.3.0 |
 | <a name="requirement_local"></a> [local](#requirement\_local) | >= 1.4.0 |
 | <a name="requirement_tls"></a> [tls](#requirement\_tls) | >= 2.1.1 |
 
@@ -231,7 +231,7 @@ $ terraform destroy
 | Name | Version |
 |------|---------|
 | <a name="provider_aws"></a> [aws](#provider\_aws) | >= 2.53.0 |
-| <a name="provider_ignition"></a> [ignition](#provider\_ignition) | >= 1.2.1 |
+| <a name="provider_ignition"></a> [ignition](#provider\_ignition) | <= 1.3.0 |
 | <a name="provider_local"></a> [local](#provider\_local) | >= 1.4.0 |
 | <a name="provider_tls"></a> [tls](#provider\_tls) | >= 2.1.1 |
 
@@ -301,22 +301,22 @@ No modules.
 | [aws_iam_policy_document.autounseal_sts](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
 | [aws_iam_policy_document.snapshots](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
 | [aws_iam_policy_document.snapshots_sts](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
-| [ignition_config.node](https://registry.terraform.io/providers/hashicorp/ignition/latest/docs/data-sources/config) | data source |
-| [ignition_file.auth_principals_admin](https://registry.terraform.io/providers/hashicorp/ignition/latest/docs/data-sources/file) | data source |
-| [ignition_file.auth_principals_core](https://registry.terraform.io/providers/hashicorp/ignition/latest/docs/data-sources/file) | data source |
-| [ignition_file.ca_ssh_public_keys](https://registry.terraform.io/providers/hashicorp/ignition/latest/docs/data-sources/file) | data source |
-| [ignition_file.ca_tls_public_keys](https://registry.terraform.io/providers/hashicorp/ignition/latest/docs/data-sources/file) | data source |
-| [ignition_file.config](https://registry.terraform.io/providers/hashicorp/ignition/latest/docs/data-sources/file) | data source |
-| [ignition_file.helper](https://registry.terraform.io/providers/hashicorp/ignition/latest/docs/data-sources/file) | data source |
-| [ignition_file.node_ca](https://registry.terraform.io/providers/hashicorp/ignition/latest/docs/data-sources/file) | data source |
-| [ignition_file.node_cert](https://registry.terraform.io/providers/hashicorp/ignition/latest/docs/data-sources/file) | data source |
-| [ignition_file.node_key](https://registry.terraform.io/providers/hashicorp/ignition/latest/docs/data-sources/file) | data source |
-| [ignition_file.sshd_config](https://registry.terraform.io/providers/hashicorp/ignition/latest/docs/data-sources/file) | data source |
-| [ignition_filesystem.data](https://registry.terraform.io/providers/hashicorp/ignition/latest/docs/data-sources/filesystem) | data source |
-| [ignition_systemd_unit.mount](https://registry.terraform.io/providers/hashicorp/ignition/latest/docs/data-sources/systemd_unit) | data source |
-| [ignition_systemd_unit.service](https://registry.terraform.io/providers/hashicorp/ignition/latest/docs/data-sources/systemd_unit) | data source |
-| [ignition_user.admin](https://registry.terraform.io/providers/hashicorp/ignition/latest/docs/data-sources/user) | data source |
-| [ignition_user.core](https://registry.terraform.io/providers/hashicorp/ignition/latest/docs/data-sources/user) | data source |
+| [ignition_config.node](https://registry.terraform.io/providers/community-terraform-providers/ignition/latest/docs/data-sources/config) | data source |
+| [ignition_file.auth_principals_admin](https://registry.terraform.io/providers/community-terraform-providers/ignition/latest/docs/data-sources/file) | data source |
+| [ignition_file.auth_principals_core](https://registry.terraform.io/providers/community-terraform-providers/ignition/latest/docs/data-sources/file) | data source |
+| [ignition_file.ca_ssh_public_keys](https://registry.terraform.io/providers/community-terraform-providers/ignition/latest/docs/data-sources/file) | data source |
+| [ignition_file.ca_tls_public_keys](https://registry.terraform.io/providers/community-terraform-providers/ignition/latest/docs/data-sources/file) | data source |
+| [ignition_file.config](https://registry.terraform.io/providers/community-terraform-providers/ignition/latest/docs/data-sources/file) | data source |
+| [ignition_file.helper](https://registry.terraform.io/providers/community-terraform-providers/ignition/latest/docs/data-sources/file) | data source |
+| [ignition_file.node_ca](https://registry.terraform.io/providers/community-terraform-providers/ignition/latest/docs/data-sources/file) | data source |
+| [ignition_file.node_cert](https://registry.terraform.io/providers/community-terraform-providers/ignition/latest/docs/data-sources/file) | data source |
+| [ignition_file.node_key](https://registry.terraform.io/providers/community-terraform-providers/ignition/latest/docs/data-sources/file) | data source |
+| [ignition_file.sshd_config](https://registry.terraform.io/providers/community-terraform-providers/ignition/latest/docs/data-sources/file) | data source |
+| [ignition_filesystem.data](https://registry.terraform.io/providers/community-terraform-providers/ignition/latest/docs/data-sources/filesystem) | data source |
+| [ignition_systemd_unit.mount](https://registry.terraform.io/providers/community-terraform-providers/ignition/latest/docs/data-sources/systemd_unit) | data source |
+| [ignition_systemd_unit.service](https://registry.terraform.io/providers/community-terraform-providers/ignition/latest/docs/data-sources/systemd_unit) | data source |
+| [ignition_user.admin](https://registry.terraform.io/providers/community-terraform-providers/ignition/latest/docs/data-sources/user) | data source |
+| [ignition_user.core](https://registry.terraform.io/providers/community-terraform-providers/ignition/latest/docs/data-sources/user) | data source |
 
 ## Inputs
 
