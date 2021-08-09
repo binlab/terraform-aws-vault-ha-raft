@@ -66,6 +66,7 @@ Why not use a Kubernetes or other current cluster? For this, I can name a few re
 - After Flatcar Container Linux [release 2905.2.0](https://kinvolk.io/flatcar-container-linux/releases/#release-2905.2.0) Vault cluster stop working due [rkt](https://www.openshift.com/learn/topics/rkt) deprecated, so all Vault module tags up to `v0.1.8` stopped work, more [#48](https://github.com/binlab/terraform-aws-vault-ha-raft/issues/48). Please update module to latest version and check all the latest changes to compatibility with your configuration.
 - From **August 1, 2021** `Flatcar Container Linux (Stable)` by owner `075585003325` was removed from AMI public images and replaced by **AMI Marketplace** from owner `679593333241`. This means all previous tags and Terraform code stopped work and need to update module or configure **AMI** manualy by [ami_image](https://github.com/binlab/terraform-aws-vault-ha-raft#input_ami_image). More about issue [#60](https://github.com/binlab/terraform-aws-vault-ha-raft/issues/60), [#61](https://github.com/binlab/terraform-aws-vault-ha-raft/pull/61)
 - For updating **Vault** module to version `0.2.x` need some manual work, as there are some breaking changes, read more [#61](https://github.com/binlab/terraform-aws-vault-ha-raft/pull/61), [#63](https://github.com/binlab/terraform-aws-vault-ha-raft/pull/63)
+- From commit [eaa9c48](https://github.com/binlab/terraform-aws-vault-ha-raft/commit/eaa9c484b418593684df932e97081d84b8ca9084) the module supports **Terraform** versions newer than `0.12.x` but still have backward compatibility with a **Terraform** `v0.12.x` but warns about unsupported source attribute, more [#64](https://github.com/binlab/terraform-aws-vault-ha-raft/pull/64). But from now we are announcing the deprecation of support for **Terraform** `v0.12.x` and support will be discontinued soon.
 
 
 ## AWS Permissions
@@ -222,7 +223,7 @@ $ terraform destroy
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.12 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 2.53.0 |
-| <a name="requirement_ignition"></a> [ignition](#requirement\_ignition) | >= 1.2.1 |
+| <a name="requirement_ignition"></a> [ignition](#requirement\_ignition) | <= 1.3.0 |
 | <a name="requirement_local"></a> [local](#requirement\_local) | >= 1.4.0 |
 | <a name="requirement_tls"></a> [tls](#requirement\_tls) | >= 2.1.1 |
 
@@ -231,7 +232,7 @@ $ terraform destroy
 | Name | Version |
 |------|---------|
 | <a name="provider_aws"></a> [aws](#provider\_aws) | >= 2.53.0 |
-| <a name="provider_ignition"></a> [ignition](#provider\_ignition) | >= 1.2.1 |
+| <a name="provider_ignition"></a> [ignition](#provider\_ignition) | <= 1.3.0 |
 | <a name="provider_local"></a> [local](#provider\_local) | >= 1.4.0 |
 | <a name="provider_tls"></a> [tls](#provider\_tls) | >= 2.1.1 |
 
@@ -301,22 +302,22 @@ No modules.
 | [aws_iam_policy_document.autounseal_sts](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
 | [aws_iam_policy_document.snapshots](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
 | [aws_iam_policy_document.snapshots_sts](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
-| [ignition_config.node](https://registry.terraform.io/providers/hashicorp/ignition/latest/docs/data-sources/config) | data source |
-| [ignition_file.auth_principals_admin](https://registry.terraform.io/providers/hashicorp/ignition/latest/docs/data-sources/file) | data source |
-| [ignition_file.auth_principals_core](https://registry.terraform.io/providers/hashicorp/ignition/latest/docs/data-sources/file) | data source |
-| [ignition_file.ca_ssh_public_keys](https://registry.terraform.io/providers/hashicorp/ignition/latest/docs/data-sources/file) | data source |
-| [ignition_file.ca_tls_public_keys](https://registry.terraform.io/providers/hashicorp/ignition/latest/docs/data-sources/file) | data source |
-| [ignition_file.config](https://registry.terraform.io/providers/hashicorp/ignition/latest/docs/data-sources/file) | data source |
-| [ignition_file.helper](https://registry.terraform.io/providers/hashicorp/ignition/latest/docs/data-sources/file) | data source |
-| [ignition_file.node_ca](https://registry.terraform.io/providers/hashicorp/ignition/latest/docs/data-sources/file) | data source |
-| [ignition_file.node_cert](https://registry.terraform.io/providers/hashicorp/ignition/latest/docs/data-sources/file) | data source |
-| [ignition_file.node_key](https://registry.terraform.io/providers/hashicorp/ignition/latest/docs/data-sources/file) | data source |
-| [ignition_file.sshd_config](https://registry.terraform.io/providers/hashicorp/ignition/latest/docs/data-sources/file) | data source |
-| [ignition_filesystem.data](https://registry.terraform.io/providers/hashicorp/ignition/latest/docs/data-sources/filesystem) | data source |
-| [ignition_systemd_unit.mount](https://registry.terraform.io/providers/hashicorp/ignition/latest/docs/data-sources/systemd_unit) | data source |
-| [ignition_systemd_unit.service](https://registry.terraform.io/providers/hashicorp/ignition/latest/docs/data-sources/systemd_unit) | data source |
-| [ignition_user.admin](https://registry.terraform.io/providers/hashicorp/ignition/latest/docs/data-sources/user) | data source |
-| [ignition_user.core](https://registry.terraform.io/providers/hashicorp/ignition/latest/docs/data-sources/user) | data source |
+| [ignition_config.node](https://registry.terraform.io/providers/community-terraform-providers/ignition/latest/docs/data-sources/config) | data source |
+| [ignition_file.auth_principals_admin](https://registry.terraform.io/providers/community-terraform-providers/ignition/latest/docs/data-sources/file) | data source |
+| [ignition_file.auth_principals_core](https://registry.terraform.io/providers/community-terraform-providers/ignition/latest/docs/data-sources/file) | data source |
+| [ignition_file.ca_ssh_public_keys](https://registry.terraform.io/providers/community-terraform-providers/ignition/latest/docs/data-sources/file) | data source |
+| [ignition_file.ca_tls_public_keys](https://registry.terraform.io/providers/community-terraform-providers/ignition/latest/docs/data-sources/file) | data source |
+| [ignition_file.config](https://registry.terraform.io/providers/community-terraform-providers/ignition/latest/docs/data-sources/file) | data source |
+| [ignition_file.helper](https://registry.terraform.io/providers/community-terraform-providers/ignition/latest/docs/data-sources/file) | data source |
+| [ignition_file.node_ca](https://registry.terraform.io/providers/community-terraform-providers/ignition/latest/docs/data-sources/file) | data source |
+| [ignition_file.node_cert](https://registry.terraform.io/providers/community-terraform-providers/ignition/latest/docs/data-sources/file) | data source |
+| [ignition_file.node_key](https://registry.terraform.io/providers/community-terraform-providers/ignition/latest/docs/data-sources/file) | data source |
+| [ignition_file.sshd_config](https://registry.terraform.io/providers/community-terraform-providers/ignition/latest/docs/data-sources/file) | data source |
+| [ignition_filesystem.data](https://registry.terraform.io/providers/community-terraform-providers/ignition/latest/docs/data-sources/filesystem) | data source |
+| [ignition_systemd_unit.mount](https://registry.terraform.io/providers/community-terraform-providers/ignition/latest/docs/data-sources/systemd_unit) | data source |
+| [ignition_systemd_unit.service](https://registry.terraform.io/providers/community-terraform-providers/ignition/latest/docs/data-sources/systemd_unit) | data source |
+| [ignition_user.admin](https://registry.terraform.io/providers/community-terraform-providers/ignition/latest/docs/data-sources/user) | data source |
+| [ignition_user.core](https://registry.terraform.io/providers/community-terraform-providers/ignition/latest/docs/data-sources/user) | data source |
 
 ## Inputs
 
