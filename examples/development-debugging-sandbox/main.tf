@@ -24,7 +24,7 @@ module "bastion" {
 
 
 module "vault" {
-  source = "github.com/binlab/terraform-aws-vault-ha-raft?ref=master"
+  source = "../.."
 
   cluster_name        = "vault-debug"
   cluster_count       = var.cluster_count

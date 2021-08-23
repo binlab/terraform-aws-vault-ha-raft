@@ -4,7 +4,7 @@ provider "aws" {
 }
 
 module "vault" {
-  source = "github.com/binlab/terraform-aws-vault-ha-raft?ref=v0.1.8"
+  source = "github.com/binlab/terraform-aws-vault-ha-raft?ref=master"
 
   # the name that will appear for all resources and tags associated with 
   # the cluster. Convenient to test multiple clusters in the same region
